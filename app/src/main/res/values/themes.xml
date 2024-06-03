@@ -3,6 +3,7 @@
     <style name="Base.Theme.CommerceMVVM" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Добавить цвета -->
     </style>
 
     <style name="Theme.CommerceMVVM" parent="Base.Theme.CommerceMVVM" />
