@@ -17,10 +17,9 @@ class LoginViewModel @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ): ViewModel() {
 
-    // для отправки одноразовых событий
+    // для отправки одноразовых событий в пользовательский UI
     private val _login = MutableSharedFlow<Resource<FirebaseUser>>()
     val login = _login.asSharedFlow()
-
 
     fun login(email: String, password: String) {
         viewModelScope.launch { _login.emit(Resource.Loading()) }
@@ -37,6 +36,24 @@ class LoginViewModel @Inject constructor(
                 viewModelScope.launch {
                     _login.emit(Resource.Error(it.message.toString()))
                 }
+            }
+
+    }
+
+    private val _resetPassword = MutableSharedFlow<Resource<String>>()
+    val resetPassword = _resetPassword.asSharedFlow()
+
+    fun resetPasswordEmail(email: String) {
+        viewModelScope.launch {
+            _resetPassword.emit(Resource.Loading())
+        }
+
+        firebaseAuth.sendPasswordResetEmail(email)
+            .addOnSuccessListener {
+                viewModelScope.launch { _resetPassword.emit(Resource.Success(email)) }
+            }
+            .addOnFailureListener {
+                viewModelScope.launch { _resetPassword.emit(Resource.Error(it.message.toString())) }
             }
 
     }

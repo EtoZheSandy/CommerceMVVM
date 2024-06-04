@@ -11,4 +11,5 @@
     <string name="forgot_password">Забыли пароль?</string>
     <string name="welcome_register">Зарегестрироваться</string>
     <string name="have_account">Уже есть профиль? Войти</string>
+    <string name="cancel">Отмена</string>
 </resources>

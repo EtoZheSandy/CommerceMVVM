@@ -10,12 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import su.afk.commercemvvm.R
 import su.afk.commercemvvm.activities.ShoppingActivity
 import su.afk.commercemvvm.databinding.FragmentLoginBinding
+import su.afk.commercemvvm.dialogs.setupBottomDialog
 import su.afk.commercemvvm.util.Resource
 import su.afk.commercemvvm.viewModels.LoginViewModel
 import su.afk.commercemvvm.viewModels.RegisterViewModel
@@ -50,8 +52,28 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
 
         }
 
+        // для сброса пароля
+        binding.tvLoginForgotPassword.setOnClickListener {
+            setupBottomDialog { email ->
+                viewModel.resetPasswordEmail(email = email)
+            }
+        }
 
-
+        // для вывода ошибки сброса пароля
+        lifecycleScope.launch {
+            viewModel.resetPassword.collect{
+                when(it) {
+                    is Resource.Loading -> Unit
+                    is Resource.Success -> {
+                        Snackbar.make(requireView(), "Письмо отправлено на вашу почту", Snackbar.LENGTH_LONG).show()
+                    }
+                    is Resource.Error -> {
+                        Snackbar.make(requireView(), "Error: ${it.message}", Snackbar.LENGTH_LONG).show()
+                    }
+                    else -> Unit
+                }
+            }
+        }
 
         lifecycleScope.launch {
             viewModel.login.collect{
