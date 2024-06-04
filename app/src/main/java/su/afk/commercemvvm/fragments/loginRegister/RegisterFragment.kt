@@ -9,10 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import su.afk.commercemvvm.R
 import su.afk.commercemvvm.data.models.User
 import su.afk.commercemvvm.databinding.FragmentRegisterBinding
+import su.afk.commercemvvm.util.RegisterFailedState
+import su.afk.commercemvvm.util.RegisterValidation
 import su.afk.commercemvvm.util.Resource
 import su.afk.commercemvvm.viewModels.RegisterViewModel
 
@@ -62,6 +66,28 @@ class RegisterFragment: Fragment(R.layout.fragment_register) {
                         binding.buttonRegisterAccount.revertAnimation()
                     }
                     else -> Unit
+                }
+            }
+        }
+
+        // для ошибок ввода
+        lifecycleScope.launch {
+            viewModel.validation.collect{
+                if(it.email is RegisterValidation.Failed) {
+                    withContext(Dispatchers.Main) {
+                        binding.edRegisterEmail.apply {
+                            requestFocus()
+                            error = it.email.message
+                        }
+                    }
+                }
+                if (it.password is RegisterValidation.Failed) {
+                    withContext(Dispatchers.Main) {
+                        binding.edRegisterPassword.apply {
+                            requestFocus()
+                            error = it.password.message
+                        }
+                    }
                 }
             }
         }
