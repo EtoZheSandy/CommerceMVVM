@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">CommerceMVVM</string>
-    <string name="addressforrshopping">Лучший магазин\n для покупок в любой день</string>
+    <string name="addressforrshopping">Лучший магазин\n для покупок\nв любой день</string>
     <string name="quality">Лучшее качество во всей сети\nТовары со всего мира!</string>
     <string name="button_start">Начнем</string>
+    <string name="appname">Otson</string>
+    <string name="register_account">Зарегистрироваться</string>
+    <string name="login_account">Войти</string>
+    <string name="welcome_login">Войти в профиль</string>
+    <string name="dont_have_account">Еще нет профиля? Зарегестрируйся</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="welcome_register">Зарегестрироваться</string>
+    <string name="have_account">Уже есть профиль? Войти</string>
 </resources>

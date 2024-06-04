@@ -34,7 +34,7 @@
         app:layout_constraintGuide_percent="0.33" />
 
     <TextView
-        android:id="@+id/tvAddressForShopping"
+        android:id="@+id/tvWelcomeRegister"
         style="@style/h4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,13 +49,13 @@
         android:textSize="35sp"/>
 
     <TextView
-        android:id="@+id/tvQuality"
+        android:id="@+id/tvHaveAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/h2"
-        app:layout_constraintStart_toStartOf="@+id/tvAddressForShopping"
-        app:layout_constraintEnd_toEndOf="@+id/tvAddressForShopping"
-        app:layout_constraintTop_toBottomOf="@+id/tvAddressForShopping"
+        app:layout_constraintStart_toStartOf="@+id/tvWelcomeRegister"
+        app:layout_constraintEnd_toEndOf="@+id/tvWelcomeRegister"
+        app:layout_constraintTop_toBottomOf="@+id/tvWelcomeRegister"
         android:textAlignment="center"
         android:gravity="center"
         android:text="@string/quality"
@@ -75,9 +75,9 @@
         android:layout_width="@dimen/smallButtonWidth"
         android:layout_height="@dimen/smallButtonHeight"
         style="@style/blueButtonStyle"
-        app:layout_constraintTop_toBottomOf="@id/tvQuality"
-        app:layout_constraintStart_toStartOf="@+id/tvQuality"
-        app:layout_constraintEnd_toEndOf="@+id/tvQuality"
+        app:layout_constraintTop_toBottomOf="@id/tvHaveAccount"
+        app:layout_constraintStart_toStartOf="@+id/tvHaveAccount"
+        app:layout_constraintEnd_toEndOf="@+id/tvHaveAccount"
         app:layout_constraintBottom_toBottomOf="parent"
         android:text="@string/button_start" />
 
