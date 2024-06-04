@@ -43,7 +43,7 @@
             android:textSize="35sp"/>
 
         <TextView
-            android:id="@+id/tvHaveAccount"
+            android:id="@+id/tvNotHaveAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/h2"
@@ -55,12 +55,12 @@
             />
 
         <EditText
-            android:id="@+id/edRegisterFirstName"
+            android:id="@+id/edLoginEmail"
             android:layout_width="0dp"
             android:layout_height="@dimen/editTextHeight"
             app:layout_constraintStart_toStartOf="@id/guidelineLeft"
             app:layout_constraintEnd_toEndOf="@id/guidelineRight"
-            app:layout_constraintTop_toBottomOf="@id/tvHaveAccount"
+            app:layout_constraintTop_toBottomOf="@id/tvNotHaveAccount"
             style="@style/editText"
             android:hint="Email"
             android:inputType="textEmailAddress"
@@ -68,12 +68,12 @@
             />
 
         <EditText
-            android:id="@+id/edRegisterLastName"
+            android:id="@+id/edLoginPassword"
             android:layout_width="0dp"
             android:layout_height="@dimen/editTextHeight"
             app:layout_constraintStart_toStartOf="@id/guidelineLeft"
             app:layout_constraintEnd_toEndOf="@id/guidelineRight"
-            app:layout_constraintTop_toBottomOf="@id/edRegisterFirstName"
+            app:layout_constraintTop_toBottomOf="@id/edLoginEmail"
             style="@style/editText"
             android:hint="Password"
             android:inputType="textPassword"
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             style="@style/h2"
             app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-            app:layout_constraintTop_toBottomOf="@+id/edRegisterLastName"
+            app:layout_constraintTop_toBottomOf="@+id/edLoginPassword"
             android:textAlignment="center"
             android:gravity="center"
             android:text="@string/forgot_password"
@@ -94,7 +94,7 @@
             />
 
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
             android:id="@+id/buttonRegisterAccount"
             android:layout_width="0dp"
             android:layout_height="@dimen/mediumButtonHeight"
@@ -103,7 +103,8 @@
             app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
             app:layout_constraintEnd_toEndOf="@+id/guidelineRight"
             android:layout_marginTop="30dp"
-            android:text="@string/login_account" />
+            android:text="@string/login_account"
+            app:spinning_bar_color="@color/white"/>
 
         <ImageView
             android:id="@+id/buttonLoginFacebook"
