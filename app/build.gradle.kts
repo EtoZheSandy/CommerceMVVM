@@ -44,7 +44,7 @@ android {
 dependencies {
 
     //loading button
-    implementation("br.com.simplepass:loading-button-android:2.2.0")
+//    implementation("br.com.simplepass:loading-button-android:2.2.0")
 
     //Glide
     implementation("com.github.bumptech.glide:glide:4.13.0")
@@ -53,10 +53,10 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
     //viewpager2 indicatior
-    implementation("io.github.vejei.viewpagerindicator:viewpagerindicator:1.0.0-alpha.1")
+//    implementation("io.github.vejei.viewpagerindicator:viewpagerindicator:1.0.0-alpha.1")
 
     //stepView
-    implementation("com.shuhart.stepview:stepview:1.5.1")
+//    implementation("com.shuhart.stepview:stepview:1.5.1")
 
     //Android Ktx
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
@@ -64,6 +64,7 @@ dependencies {
     //Dagger hilt
     implementation("com.google.dagger:hilt-android:2.38.1")
     implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.auth)
     kapt("com.google.dagger:hilt-compiler:2.38.1")
 
     implementation(libs.androidx.core.ktx)
