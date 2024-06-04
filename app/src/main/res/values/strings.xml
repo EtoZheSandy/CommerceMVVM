@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">CommerceMVVM</string>
+    <string name="addressforrshopping">Лучший магазин\n для покупок в любой день</string>
+    <string name="quality">Лучшее качество во всей сети\nТовары со всего мира!</string>
+    <string name="button_start">Начнем</string>
 </resources>
