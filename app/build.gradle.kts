@@ -39,12 +39,16 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
 
     //loading button
 //    implementation("br.com.simplepass:loading-button-android:2.2.0")
+    implementation("com.github.leandroborgesferreira:loading-button-android:2.3.0")
 
     //Glide
     implementation("com.github.bumptech.glide:glide:4.13.0")
@@ -62,10 +66,14 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
 
     //Dagger hilt
-    implementation("com.google.dagger:hilt-android:2.38.1")
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    kapt("com.google.dagger:hilt-compiler:2.51.1")
+    implementation("androidx.hilt:hilt-navigation-fragment:1.2.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.0")
+
+
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.auth)
-    kapt("com.google.dagger:hilt-compiler:2.38.1")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
