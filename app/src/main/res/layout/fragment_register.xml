@@ -110,7 +110,7 @@
 
 
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
             android:id="@+id/buttonRegisterAccount"
             android:layout_width="0dp"
             android:layout_height="@dimen/mediumButtonHeight"
@@ -119,7 +119,8 @@
             app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
             app:layout_constraintEnd_toEndOf="@+id/guidelineRight"
             android:layout_marginTop="30dp"
-            android:text="@string/register_account" />
+            android:text="@string/register_account"
+            app:spinning_bar_color="@color/white"/>
 
         <ImageView
             android:id="@+id/buttonLoginFacebook"
