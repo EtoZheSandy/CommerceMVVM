@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 import su.afk.commercemvvm.R
 import su.afk.commercemvvm.adapters.HomeViewPagerAdapter
 import su.afk.commercemvvm.databinding.FragmentHomeBinding
@@ -16,6 +17,7 @@ import su.afk.commercemvvm.fragments.categories.FurnitureFragment
 import su.afk.commercemvvm.fragments.categories.MainCategoryFragment
 import su.afk.commercemvvm.fragments.categories.TableFragment
 
+@AndroidEntryPoint
 class HomeFragment: Fragment(R.layout.fragment_home) {
     private lateinit var binding: FragmentHomeBinding
 
@@ -48,14 +50,24 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         TabLayoutMediator(binding.tabBar, binding.viewPager) { tab, position ->
             when (position) {
                 0 -> tab.text = "Main"
-                1 -> tab.text = "Cupboard"
-                2 -> tab.text = "Furniture"
-                3 -> tab.text = "Table"
-                4 -> tab.text = "Accessory"
-                5 -> tab.text = "Chair"
+                1 -> tab.text = CATEGORY_1
+                2 -> tab.text = CATEGORY_2
+                3 -> tab.text = CATEGORY_3
+                4 -> tab.text = CATEGORY_4
+                5 -> tab.text = CATEGORY_5
             }
         }.attach()
 
 
+    }
+
+    companion object{
+        const val CATEGORY_1 = "Cupboard"
+        const val CATEGORY_2 = "Furniture"
+        const val CATEGORY_3 = "Table"
+        const val CATEGORY_4 = "Accessory"
+        const val CATEGORY_5 = "Chair"
+
+        const val CATEGORY_FB = "special"
     }
 }

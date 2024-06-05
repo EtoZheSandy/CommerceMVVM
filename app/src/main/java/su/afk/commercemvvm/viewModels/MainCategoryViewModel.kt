@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import su.afk.commercemvvm.data.models.Product
+import su.afk.commercemvvm.fragments.shopping.HomeFragment
 import su.afk.commercemvvm.util.Resource
 import javax.inject.Inject
 
@@ -29,7 +30,7 @@ class MainCategoryViewModel @Inject constructor(
         }
         // получаем из коллекции products по category фильтр special
         firestore.collection("products")
-            .whereEqualTo("category", "special").get()
+            .whereEqualTo("category", HomeFragment.CATEGORY_FB).get()
             .addOnSuccessListener { result ->
                 // получаем продукты и кастим их в data class Product
                 val productTopList = result.toObjects(Product::class.java)
