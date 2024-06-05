@@ -26,6 +26,8 @@ class MainCategoryViewModel @Inject constructor(
     private val _productsBottom = MutableStateFlow<Resource<List<Product>>>(Resource.Start())
     val productBottom: StateFlow<Resource<List<Product>>> = _productsBottom
 
+    private val pagingInfo = PagingInfo()
+
     init {
         getProductsTop()
         getProductsMedium()
@@ -76,26 +78,36 @@ class MainCategoryViewModel @Inject constructor(
             }
     }
 
-    private fun getProductsBottom() {
-        viewModelScope.launch {
-            _productsBottom.emit(Resource.Loading())
+    fun getProductsBottom() {
+        // если новый список == старому списка значит новых элементов нету
+        if(!pagingInfo.isPagingEnd) {
+            viewModelScope.launch {
+                _productsBottom.emit(Resource.Loading())
+            }
+            // получаем 10 продуктов из коллекции products
+            firestore.collection("products").limit(pagingInfo.pageBottom * 10).get()
+                .addOnSuccessListener { result ->
+                    // получаем продукты и кастим их в data class Product
+                    val productBottomList = result.toObjects(Product::class.java)
+                    pagingInfo.isPagingEnd = productBottomList == pagingInfo.oldBottomProducts // сравниваем сохранный список и новый
+                    pagingInfo.oldBottomProducts = productBottomList // сохраняем новый список
+                    viewModelScope.launch {
+                        _productsBottom.emit(Resource.Success(productBottomList))
+                    }
+                    pagingInfo.pageBottom++ // увеличиваю страницу на 1
+                }
+                .addOnFailureListener {
+                    viewModelScope.launch {
+                        _productsBottom.emit(Resource.Error(it.message.toString()))
+                    }
+                }
         }
-        // получаем из коллекции все products
-        firestore.collection("products").get()
-            .addOnSuccessListener { result ->
-                // получаем продукты и кастим их в data class Product
-                val productBottomList = result.toObjects(Product::class.java)
-
-                viewModelScope.launch {
-                    _productsBottom.emit(Resource.Success(productBottomList))
-                }
-            }
-            .addOnFailureListener {
-                viewModelScope.launch {
-                    _productsBottom.emit(Resource.Error(it.message.toString()))
-                }
-            }
     }
 
-
+    // для итерации по страницам дабы не грузить все элементы
+    internal data class PagingInfo(
+        var pageBottom: Long = 1,
+        var oldBottomProducts: List<Product> = emptyList(),
+        var isPagingEnd: Boolean = false
+    )
 }

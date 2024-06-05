@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.NestedScrollingChild
 import androidx.core.view.isVisible
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -86,20 +88,28 @@ class MainCategoryFragment: Fragment(R.layout.fragment_main_category) {
         lifecycleScope.launch {
             viewModel.productBottom.collect{
                 when(it){
-                    is Resource.Loading -> { binding.progressBar.isVisible = true }
+                    is Resource.Loading -> { binding.progressBarBottom.isVisible = true }
                     is Resource.Success -> {
                         adapterBottom.differ.submitList(it.data)
-                        binding.progressBar.isVisible = false
+                        binding.progressBarBottom.isVisible = false
                     }
                     is Resource.Error -> {
                         Log.e("MainCategoryFragment", it.message.toString())
                         Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_LONG).show()
-                        binding.progressBar.isVisible = false
+                        binding.progressBarBottom.isVisible = false
                     }
                     else -> Unit
                 }
             }
         }
+
+        // отслеживаем состояние прокрутки
+        binding.nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
+            // если достигли низа экрана
+            if(v.getChildAt(0).bottom <= v.height + scrollY) {
+                viewModel.getProductsBottom()
+            }
+        })
     }
 
     private fun setupRvTop() {
