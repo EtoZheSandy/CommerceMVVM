@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import su.afk.commercemvvm.data.models.Product
-import su.afk.commercemvvm.databinding.RvItemBestDealsBinding
+import su.afk.commercemvvm.databinding.RvItemMediumBinding
 
 
 class MediumProductAdapter: RecyclerView.Adapter<MediumProductAdapter.MediumProductAdapterViewHolder>() {
 
-    inner class MediumProductAdapterViewHolder(private val binding: RvItemBestDealsBinding):
+    inner class MediumProductAdapterViewHolder(private val binding: RvItemMediumBinding):
         RecyclerView.ViewHolder(binding.root){
 
         fun bind(product: Product){
@@ -50,7 +50,7 @@ class MediumProductAdapter: RecyclerView.Adapter<MediumProductAdapter.MediumProd
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MediumProductAdapterViewHolder {
         return MediumProductAdapterViewHolder(
-            RvItemBestDealsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            RvItemMediumBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 

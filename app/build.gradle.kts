@@ -71,7 +71,7 @@ dependencies {
     implementation(libs.firebase.firestore)
     kapt("com.google.dagger:hilt-compiler:2.51.1")
     implementation("androidx.hilt:hilt-navigation-fragment:1.2.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.1")
 
 
     implementation(libs.firebase.crashlytics)
