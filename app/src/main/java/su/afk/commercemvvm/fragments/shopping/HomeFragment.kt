@@ -43,6 +43,10 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             ChairFragment()
         )
 
+        // запрет свайпать в окне просмотра
+        binding.viewPager.isUserInputEnabled = false
+
+
         val adapterViewPager = HomeViewPagerAdapter(categoryFragments, childFragmentManager, lifecycle)
 
         // Вывод названий фрагментов в tab bar сверху для переключения между ними
@@ -68,6 +72,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         const val CATEGORY_4 = "Accessory"
         const val CATEGORY_5 = "Chair"
 
-        const val CATEGORY_FB = "special"
+        const val CATEGORY_TOP_FILTER = "special"
+        const val CATEGORY_MEDIUM_FILTER = "best deals"
     }
 }

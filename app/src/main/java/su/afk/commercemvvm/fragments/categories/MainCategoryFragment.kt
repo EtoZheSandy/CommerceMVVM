@@ -10,12 +10,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import su.afk.commercemvvm.R
+import su.afk.commercemvvm.adapters.BottomProductAdapter
+import su.afk.commercemvvm.adapters.MediumProductAdapter
 import su.afk.commercemvvm.adapters.TopProductAdapter
 import su.afk.commercemvvm.databinding.FragmentMainCategoryBinding
 import su.afk.commercemvvm.util.Resource
@@ -25,6 +26,8 @@ import su.afk.commercemvvm.viewModels.MainCategoryViewModel
 class MainCategoryFragment: Fragment(R.layout.fragment_main_category) {
     private lateinit var binding: FragmentMainCategoryBinding
     private lateinit var adapterTop: TopProductAdapter
+    private lateinit var adapterMedium: MediumProductAdapter
+    private lateinit var adapterBottom: BottomProductAdapter
     private val viewModel by viewModels<MainCategoryViewModel>()
 
     override fun onCreateView(
@@ -40,7 +43,10 @@ class MainCategoryFragment: Fragment(R.layout.fragment_main_category) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupRv()
+        setupRvTop()
+        setupRvMedium()
+        setupRvBottom()
+
         lifecycleScope.launch {
             viewModel.productTop.collect{
                 when(it){
@@ -58,13 +64,65 @@ class MainCategoryFragment: Fragment(R.layout.fragment_main_category) {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.productMedium.collect{
+                when(it){
+                    is Resource.Loading -> { binding.progressBar.isVisible = true }
+                    is Resource.Success -> {
+                        adapterMedium.differ.submitList(it.data)
+                        binding.progressBar.isVisible = false
+                    }
+                    is Resource.Error -> {
+                        Log.e("MainCategoryFragment", it.message.toString())
+                        Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_LONG).show()
+                        binding.progressBar.isVisible = false
+                    }
+                    else -> Unit
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.productBottom.collect{
+                when(it){
+                    is Resource.Loading -> { binding.progressBar.isVisible = true }
+                    is Resource.Success -> {
+                        adapterBottom.differ.submitList(it.data)
+                        binding.progressBar.isVisible = false
+                    }
+                    is Resource.Error -> {
+                        Log.e("MainCategoryFragment", it.message.toString())
+                        Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_LONG).show()
+                        binding.progressBar.isVisible = false
+                    }
+                    else -> Unit
+                }
+            }
+        }
     }
 
-    private fun setupRv() {
+    private fun setupRvTop() {
         adapterTop = TopProductAdapter()
         binding.rvTopProducts.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = adapterTop
+        }
+    }
+
+    private fun setupRvMedium(){
+        adapterMedium = MediumProductAdapter()
+        binding.rvMediumProducts.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = adapterMedium
+        }
+    }
+
+    private fun setupRvBottom(){
+        adapterBottom = BottomProductAdapter()
+        binding.rvBottomProducts.apply {
+            layoutManager = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
+            adapter = adapterBottom
         }
     }
 }
