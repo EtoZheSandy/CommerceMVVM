@@ -10,10 +10,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import su.afk.commercemvvm.R
 import su.afk.commercemvvm.adapters.HomeViewPagerAdapter
 import su.afk.commercemvvm.databinding.FragmentHomeBinding
-import su.afk.commercemvvm.fragments.categories.AccessoryFragment
+import su.afk.commercemvvm.fragments.categories.WardrobeFragment
 import su.afk.commercemvvm.fragments.categories.ChairFragment
-import su.afk.commercemvvm.fragments.categories.CupboardFragment
-import su.afk.commercemvvm.fragments.categories.FurnitureFragment
+import su.afk.commercemvvm.fragments.categories.BedFragment
+import su.afk.commercemvvm.fragments.categories.DivanFragment
 import su.afk.commercemvvm.fragments.categories.MainCategoryFragment
 import su.afk.commercemvvm.fragments.categories.TableFragment
 
@@ -36,11 +36,11 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
         val categoryFragments = arrayListOf<Fragment>(
             MainCategoryFragment(),
-            CupboardFragment(),
-            FurnitureFragment(),
+            WardrobeFragment(),
             TableFragment(),
-            AccessoryFragment(),
-            ChairFragment()
+            ChairFragment(),
+            DivanFragment(),
+            BedFragment()
         )
 
         // запрет свайпать в окне просмотра
