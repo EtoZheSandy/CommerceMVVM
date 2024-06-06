@@ -1,6 +1,7 @@
 package su.afk.commercemvvm.viewModels
 
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
@@ -25,6 +26,9 @@ class IntoDuctionViewModel @Inject constructor(
         val user = firebaseAuth.currentUser
 
 
+        Log.d("TAG", "Вошел или юзер?: ${user != null}")
+        Log.d("TAG", "Юзер: $user")
+        Log.d("TAG", "isButtonClicked: $isButtonClicked")
         if(user != null) { // если юзер вошел в систему
             viewModelScope.launch {
                 _navigate.emit(SHOPPING_ACTIVITY)
