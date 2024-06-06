@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -35,7 +36,7 @@ class IntroductionFragment: Fragment(R.layout.fragment_introduction) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launch {
+        lifecycleScope.launch  {
             viewModel.navigate.collect{
                 when(it) {
                     IntoDuctionViewModel.SHOPPING_ACTIVITY -> {
@@ -44,6 +45,9 @@ class IntroductionFragment: Fragment(R.layout.fragment_introduction) {
                             // для стека приложения, если юзеры уже вошли то при нажатие назат им не нужно будет возвращаться на эту страницу
                             // так что этот флажок гарантирует удаление этого активити
                             startActivity(intent)
+                            // Переход к ShoppingActivity должен завершать текущую активность (requireActivity().finish()),
+                            // чтобы избежать возврата к фрагментам входа
+                            requireActivity().finish()
                         }
                     }
 

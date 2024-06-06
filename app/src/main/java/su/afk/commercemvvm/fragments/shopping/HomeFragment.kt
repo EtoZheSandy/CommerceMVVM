@@ -66,13 +66,13 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     }
 
     companion object{
-        const val CATEGORY_1 = "Cupboard"
-        const val CATEGORY_2 = "Furniture"
-        const val CATEGORY_3 = "Table"
-        const val CATEGORY_4 = "Accessory"
-        const val CATEGORY_5 = "Chair"
+        const val CATEGORY_1 = "Шкаф"
+        const val CATEGORY_2 = "Стол"
+        const val CATEGORY_3 = "Стул"
+        const val CATEGORY_4 = "Диван"
+        const val CATEGORY_5 = "Кровать"
 
-        const val CATEGORY_TOP_FILTER = "special"
-        const val CATEGORY_MEDIUM_FILTER = "best deals"
+        const val CATEGORY_TOP_FILTER = "выгода"
+        const val CATEGORY_MEDIUM_FILTER = "акция"
     }
 }
