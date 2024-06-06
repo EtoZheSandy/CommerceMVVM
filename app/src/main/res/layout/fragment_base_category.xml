@@ -11,14 +11,42 @@
         android:layout_height="wrap_content">
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvBestProducts"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/promoTovar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Товары со скидками"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rdBestProduct"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/promoTovar"/>
 
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/rvBestProducts"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <ProgressBar-->
+<!--            android:id="@+id/progressBestProducts"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:indeterminateTint="@color/my_gray700"-->
+<!--            android:visibility="visible"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/rvBestProducts"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/rvBestProducts"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/rvBestProducts" />-->
 
         <TextView
             android:id="@+id/tvOffersProducts"
@@ -29,8 +57,8 @@
             android:text="Лучшие товары"
             android:textColor="@color/black"
             android:textSize="24dp"
-            app:layout_constraintStart_toStartOf="@+id/rvBestProducts"
-            app:layout_constraintTop_toBottomOf="@+id/rvBestProducts" />
+            app:layout_constraintStart_toStartOf="@+id/rdBestProduct"
+            app:layout_constraintTop_toBottomOf="@+id/rdBestProduct" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvOffersProducts"
@@ -45,7 +73,7 @@
             />
 
         <ProgressBar
-            android:id="@+id/progressBarBottom"
+            android:id="@+id/progressOffersProducts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible"

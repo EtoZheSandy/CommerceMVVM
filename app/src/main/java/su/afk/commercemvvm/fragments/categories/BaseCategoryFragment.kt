@@ -1,6 +1,7 @@
 package su.afk.commercemvvm.fragments.categories
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +30,7 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentBaseCategoryBinding.inflate(inflater)
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,7 +40,7 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
         setupOfferRv()
 
         // горизонтальная прокрутка акционных товаров
-        binding.rvBestProducts.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+        binding.rdBestProduct.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
@@ -61,10 +62,18 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
 
     fun setupBestRv() {
 //        bestAdapter = TopProductAdapter() // инициализирует в lazy
-        binding.rvBestProducts.apply {
+        binding.rdBestProduct.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = bestAdapter
         }
+    }
+
+    fun showBestLoading() {
+//        binding.progressBestProducts.visibility = View.VISIBLE
+    }
+
+    fun hideBestLoading() {
+//        binding.progressBestProducts.visibility = View.GONE
     }
 
     open fun pigingBestRequest() {}
@@ -75,6 +84,14 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
             layoutManager = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
             adapter = offerAdapter
         }
+    }
+
+    fun showOfferLoading() {
+        binding.progressOffersProducts.visibility = View.VISIBLE
+    }
+
+    fun hideOfferLoading() {
+        binding.progressOffersProducts.visibility = View.GONE
     }
 
     open fun pigingOfferRequest() {}

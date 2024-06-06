@@ -1,5 +1,6 @@
 package su.afk.commercemvvm.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.FirebaseFirestore
@@ -35,6 +36,7 @@ class CategoryViewModel constructor(
             .limit(10).get()
             .addOnSuccessListener {
                 val products = it.toObjects(Product::class.java)
+                Log.d("TAG", "getBestProducts ${category.category}: $products")
                 viewModelScope.launch {
                     _offerProducts.emit(Resource.Success(products))
                 }
@@ -54,6 +56,7 @@ class CategoryViewModel constructor(
             .limit(10).get()
             .addOnSuccessListener {
                 val products = it.toObjects(Product::class.java)
+                Log.d("TAG", "getOfferProducts ${category.category}: $products")
                 viewModelScope.launch {
                     _offerProducts.emit(Resource.Success(products))
                 }

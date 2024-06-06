@@ -1,6 +1,7 @@
 package su.afk.commercemvvm.adapters
 
 import android.graphics.Paint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
