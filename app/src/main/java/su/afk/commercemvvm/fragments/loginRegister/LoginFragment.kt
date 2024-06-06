@@ -2,6 +2,7 @@ package su.afk.commercemvvm.fragments.loginRegister
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,10 +47,9 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
         // авторизация
         binding.buttonRegisterAccount.setOnClickListener {
             val email = binding.edLoginEmail.text.toString().trim()
-            val password = binding.edLoginEmail.text.toString()
+            val password = binding.edLoginPassword.text.toString()
 
             viewModel.login(email = email, password = password)
-
         }
 
         // для сброса пароля
@@ -75,6 +75,7 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
             }
         }
 
+        // для авторизации
         lifecycleScope.launch {
             viewModel.login.collect{
                 when(it) {
