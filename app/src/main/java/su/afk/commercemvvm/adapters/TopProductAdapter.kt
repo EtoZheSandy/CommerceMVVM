@@ -18,8 +18,8 @@ class TopProductAdapter: RecyclerView.Adapter<TopProductAdapter.TopProductAdapte
                 binding.apply {
                     Glide.with(itemView).load(product.images[0]).into(imageRvItem)
                     tvItemName.text = product.name
-                    tvItemPrice.text = product.price.toString()
-
+//                    tvItemPrice.text = "${product.price} ₽"
+                    tvItemPrice.text = "${String.format("%.0f", product.price)} ₽"
                 }
             }
         }

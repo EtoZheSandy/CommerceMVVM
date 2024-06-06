@@ -25,7 +25,7 @@ class MediumProductAdapter: RecyclerView.Adapter<MediumProductAdapter.MediumProd
                     val remainingPricePercentage = 1f - it
                     val priceAfterOffer = remainingPricePercentage * product.price
 
-                    tvItemPrice.text = "$ ${String.format("%.2f", priceAfterOffer)}"
+                    tvItemPrice.text = "${String.format("%.1f", priceAfterOffer)} ₽"
                 }
                 if(product.offerPercentage == null) {
                     tvItemPrice.isVisible = false

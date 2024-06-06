@@ -53,7 +53,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         binding.viewPager.adapter = adapterViewPager
         TabLayoutMediator(binding.tabBar, binding.viewPager) { tab, position ->
             when (position) {
-                0 -> tab.text = "Main"
+                0 -> tab.text = "Главная"
                 1 -> tab.text = CATEGORY_1
                 2 -> tab.text = CATEGORY_2
                 3 -> tab.text = CATEGORY_3

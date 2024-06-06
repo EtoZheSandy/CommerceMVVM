@@ -3,6 +3,7 @@ package su.afk.commercemvvm.adapters
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -24,8 +25,13 @@ class BottomProductAdapter: RecyclerView.Adapter<BottomProductAdapter.BottomProd
                     val remainingPricePercentage = 1f - it
                     val priceAfterOffer = remainingPricePercentage * product.price
 
-                    tvItemPriceNew.text = "$ ${String.format("%.2f", priceAfterOffer)}"
-                    tvItemPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG // перечеркивание текста
+                    tvItemPriceNew.text = "${String.format("%.2f", priceAfterOffer)} ₽"
+//                    tvItemPrice.paintFlags = tvItemPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+//                    tvItemPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG // перечеркивание текста
+                }
+
+                if(product.offerPercentage == null) {
+                    tvItemPrice.isVisible = false
                 }
                 tvItemPrice.text = product.price.toString()
                 tvItemName.text = product.name
