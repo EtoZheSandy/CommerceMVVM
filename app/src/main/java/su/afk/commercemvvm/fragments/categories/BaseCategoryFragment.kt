@@ -18,9 +18,9 @@ import su.afk.commercemvvm.databinding.FragmentBaseCategoryBinding
 open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
     private lateinit var binding: FragmentBaseCategoryBinding
     // protected для доступа только в дочерних фрагментах
-//    protected lateinit var bestAdapter: TopProductAdapter
+//    protected lateinit var bestAdapter: BottomProductAdapter
     // lazy инициализируем когда обращаемся первый раз
-    protected val bestAdapter: TopProductAdapter by lazy { TopProductAdapter() }
+    protected val bestAdapter: BottomProductAdapter by lazy { BottomProductAdapter() }
 //    protected lateinit var offerAdapter: BottomProductAdapter
     protected val offerAdapter: BottomProductAdapter by lazy { BottomProductAdapter() }
 
@@ -61,7 +61,7 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
     }
 
     fun setupBestRv() {
-//        bestAdapter = TopProductAdapter() // инициализирует в lazy
+//        bestAdapter = BottomProductAdapter() // инициализирует в lazy
         binding.rdBestProduct.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = bestAdapter

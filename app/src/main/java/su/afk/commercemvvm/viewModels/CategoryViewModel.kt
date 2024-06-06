@@ -38,12 +38,12 @@ class CategoryViewModel constructor(
                 val products = it.toObjects(Product::class.java)
                 Log.d("TAG", "getBestProducts ${category.category}: $products")
                 viewModelScope.launch {
-                    _offerProducts.emit(Resource.Success(products))
+                    _bestProducts.emit(Resource.Success(products))
                 }
             }
             .addOnFailureListener {
                 viewModelScope.launch {
-                    _offerProducts.emit(Resource.Error(it.message.toString()))
+                    _bestProducts.emit(Resource.Error(it.message.toString()))
                 }
             }
     }

@@ -26,7 +26,7 @@ class BottomProductAdapter: RecyclerView.Adapter<BottomProductAdapter.BottomProd
                     val remainingPricePercentage = 1f - it
                     val priceAfterOffer = remainingPricePercentage * product.price
 
-                    tvItemPriceNew.text = "${String.format("%.2f", priceAfterOffer)} ₽"
+                    tvItemPriceNew.text = "${String.format("%.0f", priceAfterOffer)} ₽"
 //                    tvItemPrice.paintFlags = tvItemPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 //                    tvItemPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG // перечеркивание текста
                 }
