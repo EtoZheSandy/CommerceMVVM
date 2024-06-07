@@ -6,4 +6,5 @@ plugins {
     alias(libs.plugins.kapt) apply false
     alias(libs.plugins.google.gms.google.services) apply false
     alias(libs.plugins.google.firebase.crashlytics) apply false
+    alias(libs.plugins.navigation.safeargs.kotlin) apply false
 }

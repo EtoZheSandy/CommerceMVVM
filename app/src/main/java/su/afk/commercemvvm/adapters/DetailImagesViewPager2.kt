@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import su.afk.commercemvvm.databinding.ViewPagerImageItemBinding
 
-class ViewPager2ImagesDetail: RecyclerView.Adapter<ViewPager2ImagesDetail.ViewPager2ImagesDetailViewHolder>() {
+class DetailImagesViewPager2: RecyclerView.Adapter<DetailImagesViewPager2.ViewPager2ImagesDetailViewHolder>() {
 
     inner class ViewPager2ImagesDetailViewHolder(val binding: ViewPagerImageItemBinding):
             ViewHolder(binding.root) {

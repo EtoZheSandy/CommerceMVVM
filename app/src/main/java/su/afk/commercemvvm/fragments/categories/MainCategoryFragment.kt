@@ -12,6 +12,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +23,7 @@ import su.afk.commercemvvm.adapters.MediumProductAdapter
 import su.afk.commercemvvm.adapters.TopProductAdapter
 import su.afk.commercemvvm.databinding.FragmentMainCategoryBinding
 import su.afk.commercemvvm.util.Resource
+import su.afk.commercemvvm.util.bottomBarVisibilityShow
 import su.afk.commercemvvm.viewModels.MainCategoryViewModel
 
 @AndroidEntryPoint
@@ -48,6 +50,35 @@ class MainCategoryFragment: Fragment(R.layout.fragment_main_category) {
         setupRvTop()
         setupRvMedium()
         setupRvBottom()
+
+        adapterTop.onClick = { product ->
+            // передаем в bundle arg по ключу равному в nav graf
+            val bundle = Bundle().apply { putParcelable("product", product) }
+            // переходим к detailProductFragment
+            findNavController().navigate(R.id.action_homeFragment_to_detailProductFragment, bundle)
+        }
+
+        adapterMedium.onClick = { product ->
+            // передаем в bundle arg по ключу равному в nav graf
+            val bundle = Bundle().apply { putParcelable("product", product) }
+            // переходим к detailProductFragment
+            findNavController().navigate(R.id.action_homeFragment_to_detailProductFragment, bundle)
+        }
+
+        adapterBottom.onClick = { product ->
+            // передаем в bundle arg по ключу равному в nav graf
+            val bundle = Bundle().apply { putParcelable("product", product) }
+            // переходим к detailProductFragment
+            findNavController().navigate(R.id.action_homeFragment_to_detailProductFragment, bundle)
+        }
+
+        // отслеживаем состояние прокрутки
+        binding.nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
+            // если достигли низа экрана
+            if(v.getChildAt(0).bottom <= v.height + scrollY) {
+                viewModel.getProductsBottom() // подгружаем еще данные
+            }
+        })
 
         lifecycleScope.launch {
             viewModel.productTop.collect{
@@ -102,14 +133,6 @@ class MainCategoryFragment: Fragment(R.layout.fragment_main_category) {
                 }
             }
         }
-
-        // отслеживаем состояние прокрутки
-        binding.nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
-            // если достигли низа экрана
-            if(v.getChildAt(0).bottom <= v.height + scrollY) {
-                viewModel.getProductsBottom()
-            }
-        })
     }
 
     private fun setupRvTop() {
@@ -134,5 +157,10 @@ class MainCategoryFragment: Fragment(R.layout.fragment_main_category) {
             layoutManager = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
             adapter = adapterBottom
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        bottomBarVisibilityShow() // возвращаем видимость бара
     }
 }

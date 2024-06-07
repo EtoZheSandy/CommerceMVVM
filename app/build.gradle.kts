@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-parcelize")
-//    id("androidx.navigation.safeargs.kotlin")
+    alias(libs.plugins.navigation.safeargs.kotlin)
     alias(libs.plugins.hilt)
     alias(libs.plugins.kapt)
     alias(libs.plugins.google.gms.google.services)
@@ -65,6 +65,7 @@ dependencies {
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+
 
     //Dagger hilt
     implementation("com.google.dagger:hilt-android:2.51.1")

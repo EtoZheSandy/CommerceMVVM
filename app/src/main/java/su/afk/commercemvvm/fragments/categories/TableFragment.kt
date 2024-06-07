@@ -77,7 +77,7 @@ class TableFragment: BaseCategoryFragment() {
         viewModel.bestProducts
     }
     // для пагинации дописать
-    override fun pigingOfferRequest() {
+    override fun pagingOfferRequest() {
         viewModel.offerProducts
     }
 }

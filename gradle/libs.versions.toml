@@ -16,6 +16,7 @@ googleGmsGoogleServices = "4.4.2"
 googleFirebaseCrashlytics = "3.0.1"
 firebaseAuth = "23.0.0"
 firebaseFirestore = "25.0.0"
+navVersion = "2.7.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -37,3 +38,4 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt-version" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kaptVersion" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlytics" }
+navigation-safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navVersion" }

@@ -12,4 +12,5 @@
     <string name="welcome_register">Зарегестрироваться</string>
     <string name="have_account">Уже есть профиль? Войти</string>
     <string name="cancel">Отмена</string>
+    <string name="addCart">Добавить в корзину</string>
 </resources>

@@ -1,19 +1,19 @@
 package su.afk.commercemvvm.fragments.categories
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import su.afk.commercemvvm.R
 import su.afk.commercemvvm.adapters.BottomProductAdapter
-import su.afk.commercemvvm.adapters.TopProductAdapter
 import su.afk.commercemvvm.databinding.FragmentBaseCategoryBinding
+import su.afk.commercemvvm.util.bottomBarVisibilityShow
 
 open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
     private lateinit var binding: FragmentBaseCategoryBinding
@@ -55,9 +55,24 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
         binding.nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
             // если достигли низа экрана
             if(v.getChildAt(0).bottom <= v.height + scrollY) {
-                pigingOfferRequest()
+                pagingOfferRequest()
             }
         })
+
+        // клик по product
+        bestAdapter.onClick = { product ->
+            // передаем в bundle arg по ключу равному в nav graf
+            val bundle = Bundle().apply { putParcelable("product", product) }
+            // переходим к detailProductFragment
+            findNavController().navigate(R.id.action_homeFragment_to_detailProductFragment, bundle)
+        }
+        // клик по product
+        offerAdapter.onClick = { product ->
+            // передаем в bundle arg по ключу равному в nav graf
+            val bundle = Bundle().apply { putParcelable("product", product) }
+            // переходим к detailProductFragment
+            findNavController().navigate(R.id.action_homeFragment_to_detailProductFragment, bundle)
+        }
     }
 
     fun setupBestRv() {
@@ -94,5 +109,11 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
         binding.progressOffersProducts.visibility = View.GONE
     }
 
-    open fun pigingOfferRequest() {}
+    open fun pagingOfferRequest() {}
+
+
+    override fun onResume() {
+        super.onResume()
+        bottomBarVisibilityShow() // возвращаем видимость бара
+    }
 }
