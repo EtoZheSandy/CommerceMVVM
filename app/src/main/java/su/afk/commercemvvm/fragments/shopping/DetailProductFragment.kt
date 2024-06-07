@@ -4,17 +4,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import su.afk.commercemvvm.R
 import su.afk.commercemvvm.adapters.DetailColorsAdapter
 import su.afk.commercemvvm.adapters.DetailImagesViewPager2
 import su.afk.commercemvvm.adapters.DetailSizeAdapter
+import su.afk.commercemvvm.data.models.CartProduct
 import su.afk.commercemvvm.databinding.FragmentDetailProductBinding
+import su.afk.commercemvvm.util.Resource
 import su.afk.commercemvvm.util.bottomBarVisibilityHide
+import su.afk.commercemvvm.viewModels.DetailsViewModel
 
+@AndroidEntryPoint
 class DetailProductFragment: Fragment() {
     private val args by navArgs<DetailProductFragmentArgs>()
 
@@ -22,6 +34,11 @@ class DetailProductFragment: Fragment() {
     private val viewPagerAdapter by lazy { DetailImagesViewPager2() }
     private val sizeAdapter by lazy { DetailSizeAdapter() }
     private val colorsAdapter by lazy { DetailColorsAdapter() }
+
+    private var selectedColor: Int? = null
+    private var selectedSize: String? = null
+
+    private val viewModel by viewModels<DetailsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,9 +74,45 @@ class DetailProductFragment: Fragment() {
             if(product.sizes.isNullOrEmpty()) tvProductSize.isVisible = false
         }
 
+        // устанавливаем адаптеры для картинок размером и цветов если они не пусты
         viewPagerAdapter.differ.submitList(product.images)
         product.colors?.let { colorsAdapter.differ.submitList(it) }
         product.sizes?.let { sizeAdapter.differ.submitList(it) }
+
+        // слушатель нажатий по цвету/размеру
+        sizeAdapter.onItemClick = {
+            selectedSize = it
+        }
+        colorsAdapter.onItemClick = {
+            selectedColor = it
+        }
+
+        // при клике добавляет товар в корзину
+        binding.buttonAddCart.setOnClickListener {
+            viewModel.addUpdateProductInCart(CartProduct(
+                product = product, quantity = 1, selectColor = selectedColor, selectSize = selectedSize
+            ))
+        }
+
+        lifecycleScope.launch {
+            viewModel.addToCart.collectLatest {
+                when(it) {
+                    is Resource.Loading -> {
+                        binding.buttonAddCart.startAnimation()
+                    }
+                    is Resource.Success -> {
+                        binding.buttonAddCart.revertAnimation()
+                        binding.buttonAddCart.setBackgroundColor(resources.getColor(R.color.black))
+//                        Toast.makeText(requireContext(), "Добавлен в корзину", Toast.LENGTH_LONG).show()
+                    }
+                    is Resource.Error -> {
+                        binding.buttonAddCart.revertAnimation()
+                        Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_LONG).show()
+                    }
+                    else -> Unit
+                }
+            }
+        }
     }
 
     private fun setupImagePagerRv() {

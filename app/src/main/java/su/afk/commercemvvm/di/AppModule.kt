@@ -8,6 +8,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import su.afk.commercemvvm.firebase.FirebaseCommon
 import su.afk.commercemvvm.util.Constanse.INTRODUCTION_SP
 import javax.inject.Singleton
 
@@ -31,5 +32,12 @@ object AppModule {
     fun provideIndroductionSP(application: Application) =
         application.getSharedPreferences(INTRODUCTION_SP, MODE_PRIVATE)
 
-
+    @Provides
+    @Singleton
+    fun provideFirebaseCommon(
+        firebaseAuth: FirebaseAuth,
+        firestore: FirebaseFirestore
+    ): FirebaseCommon {
+        return FirebaseCommon(firestore = firestore, auth = firebaseAuth)
+    }
 }
