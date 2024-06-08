@@ -70,11 +70,14 @@ class CartFragment: Fragment(R.layout.fragment_cart) {
                 }
             }
         }
+        // общая цена корзины
+        var totalPrice = 0f
 
         // отображение общей цены всех товаров
         lifecycleScope.launch {
             viewModel.productPrice.collectLatest { price ->
                 if(price != null) {
+                    totalPrice = price
                     binding.tvTotalPrice.text = "$price"
                 }
             }
@@ -113,6 +116,15 @@ class CartFragment: Fragment(R.layout.fragment_cart) {
                 alertDialog.create()
                 alertDialog.show()
             }
+        }
+
+        // для оформления заказа передаем ключи из nav totalPrice и products
+        binding.buttonCheckout.setOnClickListener {
+            val action = CartFragmentDirections.actionCartFragmentToBillingFragment(
+                totalPrice = totalPrice,
+                products = cartAdapter.differ.currentList.toTypedArray()
+            )
+            findNavController().navigate(action)
         }
     }
 

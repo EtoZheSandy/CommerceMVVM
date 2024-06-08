@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_cartFragment_to_detailProductFragment"
             app:destination="@id/detailProductFragment" />
+        <action
+            android:id="@+id/action_cartFragment_to_billingFragment"
+            app:destination="@id/billingFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -54,5 +57,21 @@
         android:id="@+id/addressFragment"
         android:name="su.afk.commercemvvm.fragments.shopping.AddressFragment"
         android:label="AddressFragment"
-        tools:layout="@layout/fragment_address"/>
+        tools:layout="@layout/fragment_address">
+    </fragment>
+    <fragment
+        android:id="@+id/billingFragment"
+        android:name="su.afk.commercemvvm.fragments.shopping.BillingFragment"
+        android:label="BillingFragment"
+        tools:layout="@layout/fragment_billing">
+        <argument
+            android:name="totalPrice"
+            app:argType="float" />
+        <argument
+            android:name="products"
+            app:argType="su.afk.commercemvvm.data.models.CartProduct[]" />
+        <action
+            android:id="@+id/action_billingFragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
+    </fragment>
 </navigation>
