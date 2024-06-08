@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import su.afk.commercemvvm.data.models.Product
 import su.afk.commercemvvm.databinding.RvItemMediumBinding
+import su.afk.commercemvvm.util.getPriceProduct
 
 
 class MediumProductAdapter: RecyclerView.Adapter<MediumProductAdapter.MediumProductAdapterViewHolder>() {
@@ -21,12 +22,12 @@ class MediumProductAdapter: RecyclerView.Adapter<MediumProductAdapter.MediumProd
                 Glide.with(itemView).load(product.images[0]).into(imageRvItem)
                 tvItemName.text = product.name
 
-                product.offerPercentage?.let {
-                    val remainingPricePercentage = 1f - it
-                    val priceAfterOffer = remainingPricePercentage * product.price
-
+//                product.offerPercentage?.let {
+//                    val remainingPricePercentage = 1f - it
+//                    val priceAfterOffer = remainingPricePercentage * product.price
+                    val priceAfterOffer = product.offerPercentage.getPriceProduct(product.price)
                     tvItemPrice.text = "${String.format("%.1f", priceAfterOffer)} ₽"
-                }
+//                }
                 if(product.offerPercentage == null) {
                     tvItemPrice.isVisible = false
                 }
