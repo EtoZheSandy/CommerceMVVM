@@ -27,7 +27,11 @@
         android:id="@+id/profileFragment"
         android:name="su.afk.commercemvvm.fragments.shopping.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile"/>
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="su.afk.commercemvvm.fragments.shopping.SearchFragment"
@@ -46,4 +50,9 @@
             android:name="product"
             app:argType="su.afk.commercemvvm.data.models.Product" />
     </fragment>
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="su.afk.commercemvvm.fragments.shopping.AddressFragment"
+        android:label="AddressFragment"
+        tools:layout="@layout/fragment_address"/>
 </navigation>
