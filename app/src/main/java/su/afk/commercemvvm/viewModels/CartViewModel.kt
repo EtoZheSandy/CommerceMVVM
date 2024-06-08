@@ -6,13 +6,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import su.afk.commercemvvm.data.models.CartProduct
 import su.afk.commercemvvm.data.models.Product
 import su.afk.commercemvvm.firebase.FirebaseCommon
 import su.afk.commercemvvm.util.Resource
+import su.afk.commercemvvm.util.getPriceProduct
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +32,21 @@ class CartViewModel @Inject constructor(
     val cartProducts = _cartProducts.asStateFlow()
 
 
+    // общий прайс корзины
+    val productPrice = cartProducts.map {
+        when(it) {
+            is Resource.Success -> {
+                calculatePrice(it.data!!)
+            }
+            else -> null
+        }
+    }
+    // прайс всех товаров в корзине
+    private fun calculatePrice(data: List<CartProduct>): Float {
+        return data.sumByDouble { cartProduct ->
+            (cartProduct.product.offerPercentage.getPriceProduct(cartProduct.product.price) * cartProduct.quantity).toDouble()
+        }.toFloat()
+    }
     private var cartProductDocument = emptyList<DocumentSnapshot>()
 
     init {
@@ -36,9 +55,7 @@ class CartViewModel @Inject constructor(
 
     // получаем товары из корзины юзера
     private fun gerCartProducts() {
-        viewModelScope.launch {
-            _cartProducts.emit(Resource.Loading())
-        }
+        viewModelScope.launch { _cartProducts.emit(Resource.Loading()) }
 
         firestore.collection("user")
             .document(auth.uid!!).collection("cart")
@@ -57,8 +74,7 @@ class CartViewModel @Inject constructor(
     }
 
     // изменяем колличество товаров в корзине
-    private fun changeQuantity(cartProduct: CartProduct, quantityChanging: FirebaseCommon.QuantityChanging) {
-
+    fun changeQuantity(cartProduct: CartProduct, quantityChanging: FirebaseCommon.QuantityChanging) {
         // ищем индекс продукта в корзине
         val index = cartProducts.value.data?.indexOf(cartProduct)
 
@@ -70,8 +86,20 @@ class CartViewModel @Inject constructor(
         if(index != null && index != -1) {
             val documentId = cartProductDocument[index].id
             when(quantityChanging) {
-                FirebaseCommon.QuantityChanging.INCREASE -> increaseQuantity(documentId)
-                FirebaseCommon.QuantityChanging.DECREASE -> decreaseQuantity(documentId)
+                FirebaseCommon.QuantityChanging.INCREASE -> {
+                    viewModelScope.launch { _cartProducts.emit(Resource.Loading()) }
+                    increaseQuantity(documentId)
+                }
+                FirebaseCommon.QuantityChanging.DECREASE -> {
+
+                    if(cartProduct.quantity == 1) {
+                        viewModelScope.launch { _deleteDialog.emit(cartProduct) }
+                        return
+                    }
+
+                    viewModelScope.launch { _cartProducts.emit(Resource.Loading()) }
+                    decreaseQuantity(documentId)
+                }
             }
         } else {
 
@@ -91,6 +119,22 @@ class CartViewModel @Inject constructor(
             if(exception != null) {
                 viewModelScope.launch { _cartProducts.emit(Resource.Error(exception.message.toString())) }
             }
+        }
+    }
+
+
+    private val _deleteDialog = MutableSharedFlow<CartProduct>()
+    val deleteDialog = _deleteDialog.asSharedFlow()
+
+    // удаление товара из корзины
+    fun deleteCartProduct(cartProduct: CartProduct) {
+        // ищем индекс продукта в корзине
+        val index = cartProducts.value.data?.indexOf(cartProduct)
+
+        if(index != null && index != -1) {
+            val documentId = cartProductDocument[index].id
+            firestore.collection("user").document(auth.uid!!).collection("cart")
+                .document(documentId).delete() // удаляем товар(документ) из корзины
         }
     }
 }
