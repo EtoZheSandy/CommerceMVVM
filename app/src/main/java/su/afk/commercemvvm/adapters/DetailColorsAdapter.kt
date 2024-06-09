@@ -47,7 +47,7 @@ class DetailColorsAdapter: RecyclerView.Adapter<DetailColorsAdapter.ColorsAdapte
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorsAdapterVH {
         return ColorsAdapterVH(
-            RvItemDtColorBinding.inflate(LayoutInflater.from(parent.context))
+            RvItemDtColorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 

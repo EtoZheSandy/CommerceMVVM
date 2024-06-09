@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_profileFragment_to_accountOptionsFragment2"
             app:destination="@id/accountOptionsFragment2" />
+        <action
+            android:id="@+id/action_profileFragment_to_allOrdersFragment"
+            app:destination="@id/allOrdersFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -82,4 +85,9 @@
         android:name="su.afk.commercemvvm.fragments.loginRegister.AccountOptionsFragment"
         android:label="AccountOptionsFragment"
         tools:layout="@layout/fragment_user_account"/>
+    <fragment
+        android:id="@+id/allOrdersFragment"
+        android:name="su.afk.commercemvvm.fragments.settings.AllOrdersFragment"
+        android:label="AllOrdersFragment"
+        tools:layout="@layout/fragment_orders"/>
 </navigation>
