@@ -95,7 +95,7 @@ class BillingFragment: Fragment(R.layout.fragment_billing) {
         billingProductAdapter.differ.submitList(product)
 
         // цена корзины
-        binding.tvTotalPrice.text = totalPrice.toString()
+        binding.tvTotalPrice.text = "$totalPrice ₽"
 
 
         // получаем адресс доставки из адаптера
@@ -133,6 +133,11 @@ class BillingFragment: Fragment(R.layout.fragment_billing) {
                     else -> Unit
                 }
             }
+        }
+
+        // кнопка назад
+        binding.imageCloseBilling.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 
