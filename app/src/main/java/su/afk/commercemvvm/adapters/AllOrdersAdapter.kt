@@ -52,6 +52,9 @@ class AllOrdersAdapter: RecyclerView.Adapter<AllOrdersAdapter.OrdersVH>() {
 
         holder.bind(order)
 
+        holder.itemView.setOnClickListener {
+            onClick?.invoke(order)
+        }
     }
 
     // анонимная функция передаем Order и ничего не ожидаем

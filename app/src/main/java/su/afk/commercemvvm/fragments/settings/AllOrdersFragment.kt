@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -60,6 +61,13 @@ class AllOrdersFragment: Fragment(R.layout.fragment_orders) {
                     else -> Unit
                 }
             }
+        }
+
+        // при клике по заказу ловим его тут и передаем в args по навигации во фрагмент OrderDetailFragment
+        ordersAdapter.onClick = {
+            // стрелка перехода в навигации от одного фрагмента к другому, в аргументы передаем order из адаптера
+            val action = AllOrdersFragmentDirections.actionAllOrdersFragmentToOrderDetailFragment(order = it)
+            findNavController().navigate(action) // делаем переданное действие
         }
     }
 
