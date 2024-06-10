@@ -70,10 +70,11 @@ dependencies {
     //Dagger hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
     kapt("com.google.dagger:hilt-compiler:2.51.1")
     implementation("androidx.hilt:hilt-navigation-fragment:1.2.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.1")
-
+    implementation("org.jetbrains.kotlin:kotlin-coroutines-play-services:1.8.1")
 
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.auth)

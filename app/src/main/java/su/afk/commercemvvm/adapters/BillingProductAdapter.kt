@@ -51,7 +51,7 @@ class BillingProductAdapter: Adapter<BillingProductAdapter.BillingVH>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillingVH {
         return BillingVH(
-            RvItemBillingProductsBinding.inflate(LayoutInflater.from(parent.context))
+            RvItemBillingProductsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 

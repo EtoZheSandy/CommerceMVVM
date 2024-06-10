@@ -44,7 +44,7 @@ class DetailSizeAdapter: RecyclerView.Adapter<DetailSizeAdapter.SizeAdapterVH>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SizeAdapterVH {
         return SizeAdapterVH(
-            RvItemDtSizeBinding.inflate(LayoutInflater.from(parent.context))
+            RvItemDtSizeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
