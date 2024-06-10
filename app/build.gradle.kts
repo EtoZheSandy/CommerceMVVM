@@ -51,7 +51,7 @@ dependencies {
     implementation("com.github.leandroborgesferreira:loading-button-android:2.3.0")
 
     //Glide
-    implementation("com.github.bumptech.glide:glide:4.13.0")
+    implementation("com.github.bumptech.glide:glide:5.0.0-rc01")
 
     //circular image
     implementation("de.hdodenhof:circleimageview:3.1.0")
@@ -74,7 +74,7 @@ dependencies {
     kapt("com.google.dagger:hilt-compiler:2.51.1")
     implementation("androidx.hilt:hilt-navigation-fragment:1.2.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.1")
-    implementation("org.jetbrains.kotlin:kotlin-coroutines-play-services:1.8.1")
+//    implementation("org.jetbrains.kotlin:kotlin-coroutines-play-services:1.8.1")
 
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.auth)

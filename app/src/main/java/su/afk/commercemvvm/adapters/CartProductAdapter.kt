@@ -2,6 +2,7 @@ package su.afk.commercemvvm.adapters
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import su.afk.commercemvvm.R
 import su.afk.commercemvvm.data.models.CartProduct
 import su.afk.commercemvvm.data.models.Product
 import su.afk.commercemvvm.databinding.RvCartProductItemBinding
@@ -21,7 +23,11 @@ class CartProductAdapter: RecyclerView.Adapter<CartProductAdapter.CartProductAda
 
         fun bind(cartProduct: CartProduct){
             binding.apply {
-                Glide.with(itemView).load(cartProduct.product.images[0]).into(imageCartProduct)
+                Glide.with(itemView)
+                    .load(cartProduct.product.images[0])
+                    .placeholder(R.drawable.ic_replay) // placeholder для улучшения UX
+                    .error(R.drawable.ic_error) // изображение ошибки для отображения, если изображение не загрузилось
+                    .into(imageCartProduct)
                 tvCartProductName.text = cartProduct.product.name
                 tvCartProductPrice.text = cartProduct.product.price.toString()
 
@@ -29,8 +35,13 @@ class CartProductAdapter: RecyclerView.Adapter<CartProductAdapter.CartProductAda
                 val priceAfterOffer = cartProduct.product.offerPercentage.getPriceProduct(cartProduct.product.price)
                 tvCartProductPrice.text = "${String.format("%.1f", priceAfterOffer)} ₽"
 
-                imageCartProduct.setImageDrawable(ColorDrawable(cartProduct.selectColor?: Color.TRANSPARENT))
-                tvCartSize.text = cartProduct.selectSize ?: "".also {
+
+//                Log.e("TAG", "cartProduct.selectColor: ${cartProduct.selectColor}")
+//                Log.e("TAG", "cartProduct.selectSize: ${cartProduct.selectSize}")
+                // выбранный цвет
+                imageCartColor.setImageDrawable(ColorDrawable(cartProduct.selectColor?: Color.TRANSPARENT))
+                // выбранный размер
+                tvCartSize.text = cartProduct.selectSize?.trim() ?: "".also {
                     imageCartSize.setImageDrawable(ColorDrawable(Color.TRANSPARENT))
                 }
             }

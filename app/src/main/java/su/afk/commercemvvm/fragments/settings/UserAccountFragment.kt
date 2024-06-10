@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -26,7 +27,7 @@ import su.afk.commercemvvm.dialogs.setupBottomDialog
 import su.afk.commercemvvm.util.Resource
 import su.afk.commercemvvm.viewModels.UserAccountViewModel
 
-@HiltViewModel
+@AndroidEntryPoint
 class UserAccountFragment: Fragment(R.layout.fragment_user_account) {
     private lateinit var binding: FragmentUserAccountBinding
     private val viewModel by viewModels<UserAccountViewModel>()

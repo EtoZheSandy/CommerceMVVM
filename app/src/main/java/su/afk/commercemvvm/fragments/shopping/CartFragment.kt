@@ -20,6 +20,7 @@ import su.afk.commercemvvm.databinding.FragmentCartBinding
 import su.afk.commercemvvm.firebase.FirebaseCommon
 import su.afk.commercemvvm.util.Resource
 import su.afk.commercemvvm.util.VerticalItemDecoration
+import su.afk.commercemvvm.util.bottomBarVisibilityShow
 import su.afk.commercemvvm.viewModels.CartViewModel
 
 class CartFragment: Fragment(R.layout.fragment_cart) {
@@ -78,7 +79,7 @@ class CartFragment: Fragment(R.layout.fragment_cart) {
             viewModel.productPrice.collectLatest { price ->
                 if(price != null) {
                     totalPrice = price
-                    binding.tvTotalPrice.text = "$price"
+                    binding.tvTotalPrice.text = "$price ₽"
                 }
             }
         }
@@ -126,6 +127,12 @@ class CartFragment: Fragment(R.layout.fragment_cart) {
             )
             findNavController().navigate(action)
         }
+
+
+        //кнопка назад
+//        binding.imageCloseCart.setOnClickListener {
+//            findNavController().navigateUp()
+//        }
     }
 
     private fun showOtherViews() {
@@ -162,5 +169,10 @@ class CartFragment: Fragment(R.layout.fragment_cart) {
             adapter = cartAdapter
             addItemDecoration(VerticalItemDecoration())
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        bottomBarVisibilityShow()
     }
 }
