@@ -35,11 +35,14 @@
             android:id="@+id/action_profileFragment_to_addressFragment"
             app:destination="@id/addressFragment" />
         <action
-            android:id="@+id/action_profileFragment_to_accountOptionsFragment2"
-            app:destination="@id/accountOptionsFragment2" />
-        <action
             android:id="@+id/action_profileFragment_to_allOrdersFragment"
             app:destination="@id/allOrdersFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_userAccountFragment"
+            app:destination="@id/userAccountFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_billingFragment"
+            app:destination="@id/billingFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -81,11 +84,6 @@
             app:destination="@id/addressFragment" />
     </fragment>
     <fragment
-        android:id="@+id/accountOptionsFragment2"
-        android:name="su.afk.commercemvvm.fragments.loginRegister.AccountOptionsFragment"
-        android:label="AccountOptionsFragment"
-        tools:layout="@layout/fragment_user_account"/>
-    <fragment
         android:id="@+id/allOrdersFragment"
         android:name="su.afk.commercemvvm.fragments.settings.AllOrdersFragment"
         android:label="AllOrdersFragment"
@@ -103,4 +101,9 @@
             android:name="order"
             app:argType="su.afk.commercemvvm.data.models.Order" />
     </fragment>
+    <fragment
+        android:id="@+id/userAccountFragment"
+        android:name="su.afk.commercemvvm.fragments.settings.UserAccountFragment"
+        android:label="UserAccountFragment"
+        tools:layout="@layout/fragment_user_account"/>
 </navigation>
