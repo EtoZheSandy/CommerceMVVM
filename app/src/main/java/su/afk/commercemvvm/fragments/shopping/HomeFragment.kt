@@ -44,7 +44,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         )
 
         // запрет свайпать в окне просмотра
-        binding.viewPager.isUserInputEnabled = false
+//        binding.viewPager.isUserInputEnabled = false
 
 
         val adapterViewPager = HomeViewPagerAdapter(categoryFragments, childFragmentManager, lifecycle)
