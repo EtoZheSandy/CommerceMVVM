@@ -59,7 +59,6 @@
             app:layout_constraintStart_toStartOf="@id/guideline1"
             app:layout_constraintTop_toBottomOf="@id/toolbarOrderDetails">
 
-<!--            <com.shuhart.stepview.StepView-->
             <com.shuhart.stepview.StepView
                 android:id="@+id/stepView"
                 android:layout_width="match_parent"
@@ -138,11 +137,11 @@
             android:layout_width="0dp"
             android:layout_height="1sp"
             android:layout_marginTop="15dp"
-            android:background="@color/g_blue_gray200"
+            android:background="@color/my_blue_gray200"
             app:layout_constraintTop_toBottomOf="@id/linearAddress"
             app:layout_constraintStart_toStartOf="@id/guideline1"
             app:layout_constraintEnd_toEndOf="@id/guideline2"
-            android:backgroundTint="@color/g_blue_gray200"
+            android:backgroundTint="@color/my_blue_gray200"
             />
 
         <TextView
@@ -168,7 +167,7 @@
             app:layout_constraintEnd_toEndOf="@id/guideline2"
             app:layout_constraintTop_toBottomOf="@id/tvProducts"
             android:layout_marginTop="10dp"
-            tools:listitem="@layout/billing_products_rv_item"
+            tools:listitem="@layout/rv_cart_product_item"
             />
 
         <androidx.constraintlayout.widget.ConstraintLayout
