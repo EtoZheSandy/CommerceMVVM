@@ -1,6 +1,7 @@
 package su.afk.commercemvvm.adapters
 
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ class DetailColorsAdapter: RecyclerView.Adapter<DetailColorsAdapter.ColorsAdapte
     inner class ColorsAdapterVH(private val binding: RvItemDtColorBinding): ViewHolder(binding.root) {
         fun bind(color: Int, position: Int) {
             val imageDrawable = ColorDrawable(color) // получаем цвет
+            Log.e("TAGS", "imageDrawable: $imageDrawable")
             binding.imageColor.setImageDrawable(imageDrawable) // применяем его
             // если выбран цвет
             if (position == selectedPosition) {
@@ -57,6 +59,7 @@ class DetailColorsAdapter: RecyclerView.Adapter<DetailColorsAdapter.ColorsAdapte
 
     override fun onBindViewHolder(holder: ColorsAdapterVH, position: Int) {
         val color = differ.currentList[position]
+        Log.d("TAG", "color: ${differ.currentList[position]}")
         holder.bind(color, position)
 
         holder.itemView.setOnClickListener {

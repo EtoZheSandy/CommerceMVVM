@@ -1,6 +1,8 @@
 package su.afk.commercemvvm.fragments.shopping
 
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -93,6 +95,7 @@ class DetailProductFragment: Fragment() {
             ))
         }
 
+        // кнопка добавить в корзину
         lifecycleScope.launch {
             viewModel.addToCart.collectLatest {
                 when(it) {
@@ -101,7 +104,7 @@ class DetailProductFragment: Fragment() {
                     }
                     is Resource.Success -> {
                         binding.buttonAddCart.revertAnimation()
-                        binding.buttonAddCart.setBackgroundColor(resources.getColor(R.color.black))
+//                        binding.buttonAddCart.setBackgroundColor(resources.getColor(R.color.my_dark_blue))
 //                        Toast.makeText(requireContext(), "Добавлен в корзину", Toast.LENGTH_LONG).show()
                     }
                     is Resource.Error -> {
@@ -120,7 +123,7 @@ class DetailProductFragment: Fragment() {
         }
     }
     private fun setupColorRv() {
-        binding.rvProductSize.apply {
+        binding.rvProductColors.apply {
             adapter = colorsAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
