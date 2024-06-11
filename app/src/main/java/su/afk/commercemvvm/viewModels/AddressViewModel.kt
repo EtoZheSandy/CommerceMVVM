@@ -31,7 +31,7 @@ class AddressViewModel @Inject constructor(
         viewModelScope.launch { _addNewAddress.emit(Resource.Loading()) }
         val validateInput = validateInputAddress(address)
         if(validateInput) {
-            firestore.collection("address").document(auth.uid!!).collection("address")
+            firestore.collection("user").document(auth.uid!!).collection("address")
                 .document().set(address) // сохраняем адрес доставки
                 .addOnSuccessListener {
                     viewModelScope.launch {

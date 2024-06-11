@@ -24,7 +24,7 @@ class AddressFragment: Fragment(R.layout.fragment_address) {
     private lateinit var binding: FragmentAddressBinding
     val viewModel by viewModels<AddressViewModel>()
 
-    //получаем передеанные значения
+    //получаем переданные значения
     val args by navArgs<AddressFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {

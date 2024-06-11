@@ -1,6 +1,7 @@
 package su.afk.commercemvvm.fragments.shopping
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -82,9 +83,11 @@ class BillingFragment: Fragment(R.layout.fragment_billing) {
             billingViewModel.address.collectLatest {
                 when(it) {
                     is Resource.Loading -> {
+                        Log.d("ADDRESS", "Лоадинг")
                         binding.progressbarAddress.visibility = View.VISIBLE
                     }
                     is Resource.Success -> {
+                        Log.d("ADDRESS", "it.data: ${it.data}")
                         addressAdapter.differ.submitList(it.data)
                         binding.progressbarAddress.visibility = View.GONE
                     }
@@ -104,6 +107,7 @@ class BillingFragment: Fragment(R.layout.fragment_billing) {
 
         //отображенние переанных элементов корзины
         billingProductAdapter.differ.submitList(product)
+
 
         // цена корзины
         binding.tvTotalPrice.text = "$totalPrice ₽"

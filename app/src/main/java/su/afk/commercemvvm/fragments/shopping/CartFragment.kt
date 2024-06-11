@@ -97,25 +97,27 @@ class CartFragment: Fragment(R.layout.fragment_cart) {
 
         // уменьшение товара в корзине
         cartAdapter.onMinusClick = {
-            viewModel.changeQuantity(cartProduct = it, quantityChanging = FirebaseCommon.QuantityChanging.INCREASE)
+            viewModel.changeQuantity(cartProduct = it, quantityChanging = FirebaseCommon.QuantityChanging.DECREASE)
         }
 
         // диалог удаления при клике onMinusClick.product.quantity < 1
         lifecycleScope.launch {
             viewModel.deleteDialog.collectLatest { cartProduct ->
-                val alertDialog = AlertDialog.Builder(requireContext()).apply {
-                    setTitle("Удалить товар из корзины")
-                    setMessage("Вы уверены что хотите удалить товар их своей корзины?")
-                    setNegativeButton("Отменить") { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    setPositiveButton("Удалить") {  dialog, _ ->
-                        viewModel.deleteCartProduct(cartProduct = cartProduct)
-                        dialog.dismiss()
-                    }
+                cartProduct?.let { product ->
+                    val alertDialog = AlertDialog.Builder(requireContext()).apply {
+                        setTitle("Удалить товар из корзины")
+                        setMessage("Вы уверены, что хотите удалить товар из своей корзины?")
+                        setNegativeButton("Отменить") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        setPositiveButton("Удалить") { dialog, _ ->
+                            viewModel.deleteCartProduct(cartProduct = product)
+                            dialog.dismiss()
+                        }
+                    }.create()
+
+                    alertDialog.show()
                 }
-                alertDialog.create()
-                alertDialog.show()
             }
         }
 

@@ -2,6 +2,7 @@ package su.afk.commercemvvm.adapters
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -28,7 +29,7 @@ class BillingProductAdapter: Adapter<BillingProductAdapter.BillingVH>() {
                 val priceAfterOffer = billingProduct.product.offerPercentage.getPriceProduct(billingProduct.product.price)
                 tvProductCartPrice.text = "${String.format("%.1f", priceAfterOffer)} ₽"
 
-                imageCartProduct.setImageDrawable(ColorDrawable(billingProduct.selectColor?: Color.TRANSPARENT))
+                imageCartProductColor.setImageDrawable(ColorDrawable(billingProduct.selectColor?: Color.TRANSPARENT))
                 tvCartProductSize.text = billingProduct.selectSize ?:"".also { imageCartProductSize.setImageDrawable(ColorDrawable(Color.TRANSPARENT)) }
             }
         }

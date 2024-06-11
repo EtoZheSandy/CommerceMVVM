@@ -29,12 +29,11 @@ class CartProductAdapter: RecyclerView.Adapter<CartProductAdapter.CartProductAda
                     .error(R.drawable.ic_error) // изображение ошибки для отображения, если изображение не загрузилось
                     .into(imageCartProduct)
                 tvCartProductName.text = cartProduct.product.name
-                tvCartProductPrice.text = cartProduct.product.price.toString()
+                tvCountProduct.text = cartProduct.quantity.toString()
 
                 //если есть скидка
                 val priceAfterOffer = cartProduct.product.offerPercentage.getPriceProduct(cartProduct.product.price)
                 tvCartProductPrice.text = "${String.format("%.1f", priceAfterOffer)} ₽"
-
 
 //                Log.e("TAG", "cartProduct.selectColor: ${cartProduct.selectColor}")
 //                Log.e("TAG", "cartProduct.selectSize: ${cartProduct.selectSize}")
