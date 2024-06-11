@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.NestedScrollingChild
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -72,7 +71,7 @@ class MainCategoryFragment: Fragment(R.layout.fragment_main_category) {
             findNavController().navigate(R.id.action_homeFragment_to_detailProductFragment, bundle)
         }
 
-        // отслеживаем состояние прокрутки
+        // отслеживаем состояние прокрутки вниз
         binding.nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
             // если достигли низа экрана
             if(v.getChildAt(0).bottom <= v.height + scrollY) {
@@ -80,6 +79,9 @@ class MainCategoryFragment: Fragment(R.layout.fragment_main_category) {
             }
         })
 
+        // todo реализовать подгрузку при скролле вправо по баннерам
+
+        // список вверхних продуктов
         lifecycleScope.launch {
             viewModel.productTop.collect{
                 when(it){
@@ -98,6 +100,7 @@ class MainCategoryFragment: Fragment(R.layout.fragment_main_category) {
             }
         }
 
+        // список выгодных продуктов
         lifecycleScope.launch {
             viewModel.productMedium.collect{
                 when(it){
@@ -116,6 +119,7 @@ class MainCategoryFragment: Fragment(R.layout.fragment_main_category) {
             }
         }
 
+        // Основной список продуктов
         lifecycleScope.launch {
             viewModel.productBottom.collect{
                 when(it){
