@@ -55,7 +55,10 @@ class ProfileFragment: Fragment(R.layout.fragment_profile) {
         // способы оплаты
         binding.linearBilling.setOnClickListener {
             // Для передачи аргументов через навигацию
-            val action = ProfileFragmentDirections.actionProfileFragmentToBillingFragment(totalPrice = 0f, products = emptyArray())
+            val action = ProfileFragmentDirections.actionProfileFragmentToBillingFragment(
+                totalPrice = 0f,
+                products = emptyArray(),
+                payment = false)
             findNavController().navigate(action) // передаем действие в контроллер
         }
 

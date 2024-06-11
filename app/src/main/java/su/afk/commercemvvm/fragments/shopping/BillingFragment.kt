@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -66,7 +67,17 @@ class BillingFragment: Fragment(R.layout.fragment_billing) {
         setupRvAddress()
         setupRvBillingProduct()
 
+        // отображать информацию о заказе и прочее если сюда пришли из профиля для просмотра методов оплаты?
+        if(!args.payment) {
+            binding.apply {
+                buttonPlaceOrder.isVisible = false
+                totalBoxContainer.isVisible = false
+                middleLine.isVisible = false
+                bottomLine.isVisible = false
+            }
+        }
 
+        // отбражение адресов доставки
         lifecycleScope.launch {
             billingViewModel.address.collectLatest {
                 when(it) {
@@ -101,6 +112,13 @@ class BillingFragment: Fragment(R.layout.fragment_billing) {
         // получаем адресс доставки из адаптера
         addressAdapter.onClick = {
             selectedAddress = it
+
+            // разрешаем переход на редактирование если сюда пришли из профиля для редактирование адреса доставки
+            if(!args.payment) {
+                // для редактирования адреса доставки нужно его передать во фрагмент
+                val bundle = Bundle().apply { putParcelable("address", selectedAddress) }
+                findNavController().navigate(R.id.action_billingFragment_to_addressFragment, bundle)
+            }
         }
 
         // оформление заказа
