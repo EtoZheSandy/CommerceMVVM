@@ -22,6 +22,7 @@ import su.afk.commercemvvm.adapters.DetailColorsAdapter
 import su.afk.commercemvvm.adapters.DetailImagesViewPager2
 import su.afk.commercemvvm.adapters.DetailSizeAdapter
 import su.afk.commercemvvm.data.models.CartProduct
+import su.afk.commercemvvm.data.models.Product
 import su.afk.commercemvvm.databinding.FragmentDetailProductBinding
 import su.afk.commercemvvm.util.Resource
 import su.afk.commercemvvm.util.bottomBarVisibilityHide
@@ -68,7 +69,7 @@ class DetailProductFragment: Fragment() {
 
         binding.apply { // устанавливаем описание товара
             tvProductName.text = product.name
-            tvProductPrice.text = "${product.price} ₽"
+            tvProductPrice.text = getNewPrice(priceProduct = product, discountPercentage = product.offerPercentage)
             tvProductDescription.text = product.description
 
             if(product.colors.isNullOrEmpty()) tvProductColor.isVisible = false
@@ -133,5 +134,18 @@ class DetailProductFragment: Fragment() {
             adapter = sizeAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
+    }
+
+    private fun getNewPrice(priceProduct: Product, discountPercentage: Float?): String {
+        var priceAfterOffer = priceProduct.price // цена продукта
+
+        // если есть скидка
+        discountPercentage?.let {
+            val remainingPricePercentage = 1f - discountPercentage
+            priceAfterOffer = remainingPricePercentage * priceProduct.price
+        }
+
+        // Новая цена
+        return "${String.format("%.0f", priceAfterOffer)} ₽"
     }
 }
