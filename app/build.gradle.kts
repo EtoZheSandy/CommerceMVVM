@@ -48,7 +48,6 @@ android {
 dependencies {
 
     //loading button
-//    implementation("br.com.simplepass:loading-button-android:2.2.0")
     implementation("com.github.leandroborgesferreira:loading-button-android:2.3.0")
 
     //Glide
@@ -56,9 +55,6 @@ dependencies {
 
     //circular image
     implementation("de.hdodenhof:circleimageview:3.1.0")
-
-    //viewpager2 indicatior
-//    implementation("io.github.vejei.viewpagerindicator:viewpagerindicator:1.0.0-alpha.1")
 
     // stepView
     implementation("com.github.shuhart:stepview:1.5.1")
@@ -74,8 +70,7 @@ dependencies {
     implementation(libs.firebase.storage)
     kapt("com.google.dagger:hilt-compiler:2.51.1")
     implementation("androidx.hilt:hilt-navigation-fragment:1.2.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.1")
-//    implementation("org.jetbrains.kotlin:kotlin-coroutines-play-services:1.8.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.2")
 
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.auth)

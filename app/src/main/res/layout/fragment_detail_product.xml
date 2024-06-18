@@ -38,6 +38,7 @@
         </androidx.cardview.widget.CardView>
 
 
+
         <LinearLayout
             android:id="@+id/linearTitle"
             android:layout_width="0dp"
