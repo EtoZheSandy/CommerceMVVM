@@ -109,18 +109,17 @@ class UserAccountFragment: Fragment(R.layout.fragment_user_account) {
             }
         }
 
-        // кнопка выбрать изображение профиля
+
         binding.imageEdit.setOnClickListener {
-            // неявное намерение выбрать изображение из галереи
-            val intent = Intent(Intent.ACTION_GET_CONTENT) // хотим получить контент
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/*" // типа image
             imageActivityResultLauncher.launch(intent) // запускаем через наш контракт ожидающий результата
         }
 
-        // кнопка смены пароля
+
         binding.tvUpdatePassword.setOnClickListener {
             setupBottomDialog {
-                // it это введенный email для отправки пароля, надо вызвать функцию из view и передать туда
+//                todo it это введенный email для отправки пароля, надо вызвать функцию из view и передать туда
             }
         }
     }

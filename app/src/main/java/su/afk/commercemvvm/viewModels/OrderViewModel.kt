@@ -26,7 +26,6 @@ class OrderViewModel @Inject constructor(
     fun placeOrder(order: Order) {
         viewModelScope.launch { _order.emit(Resource.Loading()) }
 
-        // используем runbatch если хоть одна из операций завершится не удачей то остальные транзакции не будут выполнены
         firestore.runBatch { batch ->
             // 1. добавляем заказ в коллекцию заказов юзера
             // 2. добавляем заказ в коллекцию общих заказов
@@ -42,13 +41,11 @@ class OrderViewModel @Inject constructor(
                 .collection("cart")
                 .get()
                 .addOnSuccessListener {
-                    // проходимся по всем документам
                     it.documents.forEach {
-                        it.reference.delete() // удаляем документ из корзины
+                        it.reference.delete()
                     }
                 }
         }.addOnSuccessListener {
-            // успешно добавлено
             viewModelScope.launch {
                 _order.emit(Resource.Success(order))
             }

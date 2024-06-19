@@ -26,9 +26,7 @@ import su.afk.commercemvvm.viewModels.CartViewModel
 class CartFragment: Fragment(R.layout.fragment_cart) {
     private lateinit var binding: FragmentCartBinding
     private val cartAdapter by lazy { CartProductAdapter() }
-//    private val viewModel by viewModels<CartViewModel>()
-    // используем activityViewModels потому что мы инициализировали уже CartViewModel в shoppingActivity
-    // и мы не хотим создавать два экземпляра viewModel
+
     private val viewModel by activityViewModels<CartViewModel>()
 
     override fun onCreateView(
@@ -71,7 +69,7 @@ class CartFragment: Fragment(R.layout.fragment_cart) {
                 }
             }
         }
-        // общая цена корзины
+
         var totalPrice = 0f
 
         // отображение общей цены всех товаров
@@ -90,12 +88,12 @@ class CartFragment: Fragment(R.layout.fragment_cart) {
             findNavController().navigate(R.id.action_cartFragment_to_detailProductFragment, bundle)
         }
 
-        // увеличение товара в корзине
+
         cartAdapter.onPlusClick = {
             viewModel.changeQuantity(cartProduct = it, quantityChanging = FirebaseCommon.QuantityChanging.INCREASE)
         }
 
-        // уменьшение товара в корзине
+
         cartAdapter.onMinusClick = {
             viewModel.changeQuantity(cartProduct = it, quantityChanging = FirebaseCommon.QuantityChanging.DECREASE)
         }
@@ -130,12 +128,6 @@ class CartFragment: Fragment(R.layout.fragment_cart) {
             )
             findNavController().navigate(action)
         }
-
-
-        //кнопка назад
-//        binding.imageCloseCart.setOnClickListener {
-//            findNavController().navigateUp()
-//        }
     }
 
     private fun showOtherViews() {

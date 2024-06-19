@@ -43,7 +43,6 @@ class UserAccountViewModel @Inject constructor(
         getUser()
     }
 
-    // получаем информацию о пользователе
     fun getUser() {
         viewModelScope.launch { _user.emit(Resource.Loading() ) }
 
@@ -60,14 +59,12 @@ class UserAccountViewModel @Inject constructor(
             }
     }
 
-    // обновляем информацию о юзере
     fun updateUser(user: User, imageUri: Uri?) {
 
         val areInputValid = validateEmail(email = user.email) is RegisterValidation.Success
                 && user.firstName.trim().isNotEmpty()
                 && user.lastName.trim().isNotEmpty()
 
-        // валидация ввода
         if(!areInputValid) {
             viewModelScope.launch { _user.emit(Resource.Error("Некоректный ввод")) }
         }
@@ -81,7 +78,6 @@ class UserAccountViewModel @Inject constructor(
         }
     }
 
-    // загружаем изображение профиля
     private fun saveUserInfoNewImage(user: User, imageUri: Uri) {
         viewModelScope.launch {
             try {
@@ -113,16 +109,12 @@ class UserAccountViewModel @Inject constructor(
 
     // логическое значение означает нужно ли нам обновить изображение профиля или сохранить старое
     private fun saveUserInfo(user: User, shouldRetrievedImage: Boolean) {
-        // если true то получаем старое изображение и обновляем пользовательские данные
         firestore.runTransaction {  transaction ->
-            // ссылка на документ с юзером
             val documentRef = firestore.collection("user").document(auth.uid!!)
 
             // сохраняем старое изображение
             if(shouldRetrievedImage) {
-                // получаем текущего юзера
                 val currentUser = transaction.get(documentRef).toObject(User::class.java)
-                // берем у нашего юзера photoUrl и добавляем его к обновленному юзеру что бы сохранить фото
                 val newUser = user.copy(photoUrl = currentUser?.photoUrl ?: "")
                 transaction.set(documentRef, newUser)
             } else {

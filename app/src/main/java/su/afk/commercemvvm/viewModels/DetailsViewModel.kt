@@ -25,31 +25,28 @@ class DetailsViewModel @Inject constructor(
     val addToCart = _addToCart.asStateFlow()
 
 
-    // 2 сценария
-    // 1 товар уже находится в корзине и юзер снова нажимает на добавить в корзину то мы просто увеличиваем количество
-    // 2 если товар был другим или вообще не был добавлен в корзину то мы добавляем его
+    /** 2 сценария
+    * 1 товар уже находится в корзине и юзер снова нажимает на добавить в корзину то мы просто увеличиваем количество
+    * 2 если товар был другим или вообще не был добавлен в корзину то мы добавляем его */
     fun addUpdateProductInCart(cartProduct: CartProduct) {
         viewModelScope.launch { _addToCart.emit(Resource.Loading()) }
-        // ищем в collection user документ по user.uid
+        /** ищем в collection user документ по user.uid
         // если коллекция cart не создана она будет создана
-        // проверяем есть ли товар в корзине
+        // проверяем есть ли товар в корзине */
         firestore.collection("user").document(auth.uid!!).collection("cart")
-            // ищем в по id товар в корзине юзера, есть ли в корзине уже этот товар?
             .whereEqualTo("product.id", cartProduct.product.id).get()
             .addOnSuccessListener { querySnapshot ->
                 // проверяем пуст ли документ, если пуст то товар еще не добавлен в корзину
                 val documents = querySnapshot.documents
 
                 if (documents.isEmpty()) {
-                    // добавляем в корзину
                     addNewProduct(cartProduct = cartProduct)
                 } else {
-                    // добавляем еще один товар, возможно с другим размеро или цветом
                     val product = documents.first().toObject(CartProduct::class.java)
-                    if(product == cartProduct) { // если продукт в корзине == добавляемому продукту то колличество +1
+                    if(product == cartProduct) { /
                         val documentId = documents.first().id
                         increaseQuantity(id = documentId, cartProduct = cartProduct)
-                    } else { // если нет то просто добавляем его
+                    } else {
                         addNewProduct(cartProduct = cartProduct)
                     }
                 }

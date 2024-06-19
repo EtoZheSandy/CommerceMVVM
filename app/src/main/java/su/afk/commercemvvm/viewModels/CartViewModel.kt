@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import su.afk.commercemvvm.data.models.CartProduct
-import su.afk.commercemvvm.data.models.Product
 import su.afk.commercemvvm.firebase.FirebaseCommon
 import su.afk.commercemvvm.util.Resource
 import su.afk.commercemvvm.util.getPriceProduct
@@ -36,13 +35,13 @@ class CartViewModel @Inject constructor(
     val productPrice = cartProducts.map {
         when(it) {
             is Resource.Success -> {
-                calculatePrice(it.data!!)
+                calculateCartPrice(it.data!!)
             }
             else -> null
         }
     }
-    // прайс всех товаров в корзине
-    private fun calculatePrice(data: List<CartProduct>): Float {
+
+    private fun calculateCartPrice(data: List<CartProduct>): Float {
         return data.sumByDouble { cartProduct ->
             (cartProduct.product.offerPercentage.getPriceProduct(cartProduct.product.price) * cartProduct.quantity).toDouble()
         }.toFloat()
@@ -50,18 +49,17 @@ class CartViewModel @Inject constructor(
     private var cartProductDocument = emptyList<DocumentSnapshot>()
 
     init {
-        gerCartProducts()
+        gerCartUserProducts()
     }
 
-    // получаем товары из корзины юзера
-    private fun gerCartProducts() {
+    private fun gerCartUserProducts() {
         viewModelScope.launch { _cartProducts.emit(Resource.Loading()) }
 
         firestore.collection("user")
             .document(auth.uid!!).collection("cart")
-            // addSnapshotListener обратный вызов когда cart в этой коллекции меняются он вызывается сам
-            // используем его потому что хотим обновлять наш юзер UI
-            // при добавление товаров от юзера
+            /** addSnapshotListener обратный вызов когда cart в этой коллекции меняются он вызывается сам
+             * используем его потому что хотим обновлять наш юзер UI
+             * при добавление товаров от юзера */
             .addSnapshotListener { value, error ->
                 if(error != null || value == null) { // если есть ошибка
                     viewModelScope.launch { _cartProducts.emit(Resource.Error(error?.message.toString())) }
@@ -79,9 +77,9 @@ class CartViewModel @Inject constructor(
         val index = cartProducts.value.data?.indexOf(cartProduct)
 
         /**
-        *  индекс может быть равен -1, если функция [gerCartProducts] delay,
+         *  индекс может быть равен -1, если функция [gerCartUserProducts] delay,
          *  и это приведет к задержке результата, который, как мы ожидаем, будет внутри [_cartProducts]
-        * и чтобы предотвратить сбой приложения, мы проверяем index != -1 и index != null
+         * и чтобы предотвратить сбой приложения, мы проверяем index != -1 и index != null
          * */
         if(index != null && index != -1) {
             val documentId = cartProductDocument[index].id
@@ -101,8 +99,6 @@ class CartViewModel @Inject constructor(
                     decreaseQuantity(documentId)
                 }
             }
-        } else {
-
         }
     }
 
@@ -126,15 +122,14 @@ class CartViewModel @Inject constructor(
     private val _deleteDialog = MutableSharedFlow<CartProduct>()
     val deleteDialog = _deleteDialog.asSharedFlow()
 
-    // удаление товара из корзины
     fun deleteCartProduct(cartProduct: CartProduct) {
-        // ищем индекс продукта в корзине
+
         val index = cartProducts.value.data?.indexOf(cartProduct)
 
         if(index != null && index != -1) {
             val documentId = cartProductDocument[index].id
             firestore.collection("user").document(auth.uid!!).collection("cart")
-                .document(documentId).delete() // удаляем товар(документ) из корзины
+                .document(documentId).delete()
         }
     }
 }

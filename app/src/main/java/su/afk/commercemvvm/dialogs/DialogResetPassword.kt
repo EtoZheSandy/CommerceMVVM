@@ -29,6 +29,6 @@ fun Fragment.setupBottomDialog(
     }
 
     buttonCancel.setOnClickListener {
-        dialog.dismiss() // закрываем диалог
+        dialog.dismiss()
     }
 }

@@ -30,7 +30,7 @@ class RegisterViewModel @Inject constructor(
     fun createAccountWithEmailAndPassword(user: User, password: String) {
         if (checkValidation(user, password)) {
             runBlocking {
-                _register.emit(Resource.Loading()) // после клика ставим статус на загрузку
+                _register.emit(Resource.Loading())
             }
             firebaseAuth.createUserWithEmailAndPassword(user.email, password)
                 .addOnSuccessListener {
@@ -46,7 +46,7 @@ class RegisterViewModel @Inject constructor(
                 password = validatePassword(password)
             )
            runBlocking {
-               _validation.send(registerFailedState) // отправляем ошибку
+               _validation.send(registerFailedState)
            }
         }
     }
@@ -66,9 +66,9 @@ class RegisterViewModel @Inject constructor(
 
     // сохранение user.uid и data user в cloud fitebase
     private fun saveUserInfo(userUid: String, user: User) {
-        dbFirestore.collection(Constanse.USER_COLLECTION) // создаем в коллекции user
-            .document(userUid) // создаем document по userUid и
-            .set(user) // кладем в него user и сохраняем
+        dbFirestore.collection(Constanse.USER_COLLECTION)
+            .document(userUid)
+            .set(user)
             .addOnSuccessListener {
                 _register.value = Resource.Success(user)
             }

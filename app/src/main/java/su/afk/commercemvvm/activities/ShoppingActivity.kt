@@ -1,7 +1,6 @@
 package su.afk.commercemvvm.activities
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -18,7 +17,6 @@ import su.afk.commercemvvm.viewModels.CartViewModel
 
 @AndroidEntryPoint
 class ShoppingActivity : AppCompatActivity() {
-//    lateinit var binding: ActivityShoppingBinding
 
     private val binding by lazy {
         ActivityShoppingBinding.inflate(layoutInflater)
@@ -28,14 +26,12 @@ class ShoppingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        enableEdgeToEdge()
-//        binding = ActivityShoppingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navController = findNavController(R.id.shoppingHostFragment)
         binding.bottomNavBar.setupWithNavController(navController)
 
-        // отображаем кооличество товаров в корзине
+        // товары в корзине
         lifecycleScope.launch {
             viewModel.cartProducts.collectLatest {
                 when(it) {

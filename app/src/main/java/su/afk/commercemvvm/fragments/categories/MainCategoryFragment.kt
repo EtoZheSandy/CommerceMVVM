@@ -51,23 +51,17 @@ class MainCategoryFragment: Fragment(R.layout.fragment_main_category) {
         setupRvBottom()
 
         adapterTop.onClick = { product ->
-            // передаем в bundle arg по ключу равному в nav graf
             val bundle = Bundle().apply { putParcelable("product", product) }
-            // переходим к detailProductFragment
             findNavController().navigate(R.id.action_homeFragment_to_detailProductFragment, bundle)
         }
 
         adapterMedium.onClick = { product ->
-            // передаем в bundle arg по ключу равному в nav graf
             val bundle = Bundle().apply { putParcelable("product", product) }
-            // переходим к detailProductFragment
             findNavController().navigate(R.id.action_homeFragment_to_detailProductFragment, bundle)
         }
 
         adapterBottom.onClick = { product ->
-            // передаем в bundle arg по ключу равному в nav graf
             val bundle = Bundle().apply { putParcelable("product", product) }
-            // переходим к detailProductFragment
             findNavController().navigate(R.id.action_homeFragment_to_detailProductFragment, bundle)
         }
 

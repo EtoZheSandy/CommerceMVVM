@@ -70,7 +70,6 @@ class OrderDetailFragment: Fragment(R.layout.fragment_order_detail) {
             }
         }
 
-
         // передаем продукты из заказа для отображения
         billingProductAdapter.differ.submitList(order.products)
     }

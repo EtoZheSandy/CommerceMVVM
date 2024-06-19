@@ -32,7 +32,7 @@ class BillingViewModel @Inject constructor(
 
         firestore.collection("user").document(auth.uid!!).collection("address")
             // поскольку юзер может добавить адресс и после вернутся на предыдущий фрагмент мы отслеживаем
-            // добавление новых адресов и сразу же их ловим тут
+            // добавление новых адресов и сразу же их ловим их
             .addSnapshotListener { value, error ->
                 if(error != null) {
                     viewModelScope.launch { _address.emit(Resource.Error(error.message.toString())) }

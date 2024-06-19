@@ -17,11 +17,9 @@ import su.afk.commercemvvm.util.bottomBarVisibilityShow
 
 open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
     private lateinit var binding: FragmentBaseCategoryBinding
-    // protected для доступа только в дочерних фрагментах
-//    protected lateinit var bestAdapter: BottomProductAdapter
-    // lazy инициализируем когда обращаемся первый раз
+
     protected val bestAdapter: BottomProductAdapter by lazy { BottomProductAdapter() }
-//    protected lateinit var offerAdapter: BottomProductAdapter
+
     protected val offerAdapter: BottomProductAdapter by lazy { BottomProductAdapter() }
 
     override fun onCreateView(
@@ -46,7 +44,7 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
 
                 // если не можем прокручивать по горизонтали и x = 0
                 if(!recyclerView.canScrollVertically(1) && dx != 0) {
-                    pigingBestRequest() // подгружаем еще акционных продуктов
+                    pagingBestRequest() // подгружаем еще акционных продуктов
                 }
             }
         })
@@ -59,24 +57,19 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
             }
         })
 
-        // клик по product
+
         bestAdapter.onClick = { product ->
-            // передаем в bundle arg по ключу равному в nav graf
             val bundle = Bundle().apply { putParcelable("product", product) }
-            // переходим к detailProductFragment
             findNavController().navigate(R.id.action_homeFragment_to_detailProductFragment, bundle)
         }
-        // клик по product
+
         offerAdapter.onClick = { product ->
-            // передаем в bundle arg по ключу равному в nav graf
             val bundle = Bundle().apply { putParcelable("product", product) }
-            // переходим к detailProductFragment
             findNavController().navigate(R.id.action_homeFragment_to_detailProductFragment, bundle)
         }
     }
 
     fun setupBestRv() {
-//        bestAdapter = BottomProductAdapter() // инициализирует в lazy
         binding.rdBestProduct.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = bestAdapter
@@ -91,10 +84,9 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
 //        binding.progressBestProducts.visibility = View.GONE
     }
 
-    open fun pigingBestRequest() {}
+    open fun pagingBestRequest() {}
 
     fun setupOfferRv() {
-//        offerAdapter = BottomProductAdapter()
         binding.rvOffersProducts.apply {
             layoutManager = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
             adapter = offerAdapter

@@ -10,13 +10,11 @@ import su.afk.commercemvvm.activities.ShoppingActivity
 fun Fragment.bottomBarVisibilityHide() {
     val bottomNavigationBarView = (activity as ShoppingActivity).findViewById<BottomNavigationView>(
         R.id.bottomNavBar)
-    // если навигация видна то теперь будет не видна и наоборот
-    bottomNavigationBarView.isVisible = false // для скрытия нижней панели навигации
+    bottomNavigationBarView.isVisible = false
 }
 
 fun Fragment.bottomBarVisibilityShow() {
     val bottomNavigationBarView = (activity as ShoppingActivity).findViewById<BottomNavigationView>(
         R.id.bottomNavBar)
-    // если навигация видна то теперь будет не видна и наоборот
-    bottomNavigationBarView.isVisible = true // для скрытия нижней панели навигации
+    bottomNavigationBarView.isVisible = true
 }

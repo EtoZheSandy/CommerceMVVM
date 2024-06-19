@@ -72,11 +72,9 @@ class DivanFragment: BaseCategoryFragment() {
         }
     }
 
-    // для пагинации дописать
-    override fun pigingBestRequest() {
+    override fun pagingBestRequest() {
         viewModel.bestProducts
     }
-    // для пагинации дописать
     override fun pagingOfferRequest() {
         viewModel.offerProducts
     }

@@ -38,11 +38,10 @@ class MainCategoryViewModel @Inject constructor(
         viewModelScope.launch {
             _productsTop.emit(Resource.Loading())
         }
-        // получаем из коллекции products по category фильтр special
+
         firestore.collection("products")
             .whereEqualTo("category", HomeFragment.CATEGORY_TOP_FILTER).get()
             .addOnSuccessListener { result ->
-                // получаем продукты и кастим их в data class Product
                 val productTopList = result.toObjects(Product::class.java)
 
                 viewModelScope.launch {
@@ -60,11 +59,9 @@ class MainCategoryViewModel @Inject constructor(
         viewModelScope.launch {
             _productsMedium.emit(Resource.Loading())
         }
-        // получаем из коллекции products по category фильтр special
         firestore.collection("products")
             .whereEqualTo("category", HomeFragment.CATEGORY_MEDIUM_FILTER).get()
             .addOnSuccessListener { result ->
-                // получаем продукты и кастим их в data class Product
                 val productMediumList = result.toObjects(Product::class.java)
 
                 viewModelScope.launch {
@@ -84,10 +81,8 @@ class MainCategoryViewModel @Inject constructor(
             viewModelScope.launch {
                 _productsBottom.emit(Resource.Loading())
             }
-            // получаем 10 продуктов из коллекции products
             firestore.collection("products").limit(pagingInfo.pageBottom * 10).get()
                 .addOnSuccessListener { result ->
-                    // получаем продукты и кастим их в data class Product
                     val productBottomList = result.toObjects(Product::class.java)
                     pagingInfo.isPagingEnd = productBottomList == pagingInfo.oldBottomProducts // сравниваем сохранный список и новый
                     pagingInfo.oldBottomProducts = productBottomList // сохраняем новый список

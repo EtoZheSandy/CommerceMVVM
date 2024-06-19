@@ -63,11 +63,9 @@ class AllOrdersFragment: Fragment(R.layout.fragment_orders) {
             }
         }
 
-        // при клике по заказу ловим его тут и передаем в args по навигации во фрагмент OrderDetailFragment
         ordersAdapter.onClick = {
-            // стрелка перехода в навигации от одного фрагмента к другому, в аргументы передаем order из адаптера
             val action = AllOrdersFragmentDirections.actionAllOrdersFragmentToOrderDetailFragment(order = it)
-            findNavController().navigate(action) // делаем переданное действие
+            findNavController().navigate(action)
         }
     }
 

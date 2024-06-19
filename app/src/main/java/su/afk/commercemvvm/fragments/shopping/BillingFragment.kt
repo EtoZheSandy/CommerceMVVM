@@ -38,7 +38,6 @@ class BillingFragment: Fragment(R.layout.fragment_billing) {
     private val billingProductAdapter by lazy { BillingProductAdapter() }
     private val billingViewModel by viewModels<BillingViewModel>()
 
-    // получаем переданные параметры от nav
     private val args by navArgs<BillingFragmentArgs>()
     private var product = emptyList<CartProduct>()
     private var totalPrice = 0f
@@ -108,10 +107,8 @@ class BillingFragment: Fragment(R.layout.fragment_billing) {
         //отображенние переанных элементов корзины
         billingProductAdapter.differ.submitList(product)
 
-
         // цена корзины
         binding.tvTotalPrice.text = "$totalPrice ₽"
-
 
         // получаем адресс доставки из адаптера
         addressAdapter.onClick = {

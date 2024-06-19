@@ -58,7 +58,6 @@ class ChairFragment: BaseCategoryFragment() {
                         showOfferLoading()
                     }
                     is Resource.Success -> {
-//                        Log.d("TAG", "offerAdapter.Success: ${it.data}")
                         offerAdapter.differ.submitList(it.data)
                         hideOfferLoading()
                     }
@@ -72,11 +71,11 @@ class ChairFragment: BaseCategoryFragment() {
         }
     }
 
-    // для пагинации дописать
-    override fun pigingBestRequest() {
+
+    override fun pagingBestRequest() {
         viewModel.bestProducts
     }
-    // для пагинации дописать
+
     override fun pagingOfferRequest() {
         viewModel.offerProducts
     }
